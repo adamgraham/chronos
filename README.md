@@ -1,7 +1,8 @@
-# Temporal
+# Chronos
+>> A Swift iOS Time & Date utility framework by [Adam Graham](http://adamgraham.io).
 
 ### Description
-Coming soon
+Work in Progress<br>Coming soon
 
 ### License
 ```
