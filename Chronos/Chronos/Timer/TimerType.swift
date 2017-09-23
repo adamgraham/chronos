@@ -22,6 +22,11 @@ public enum TimerType {
         /// A callback closure invoked every time the timer triggers a "finish" event.
         public var onFinish: TimerEvent.Callback?
 
+        internal func apply(to timer: Timer) {
+            timer.onTick = self.onTick
+            timer.onFinish = self.onFinish
+        }
+
     }
 
     // MARK: Countdown
@@ -41,6 +46,13 @@ public enum TimerType {
         public var onCount: TimerEvent.Callback
         /// A callback closure invoked when the countdown is finished.
         public var onFinish: TimerEvent.Callback?
+
+        internal func apply(to timer: Timer) {
+            timer.duration = self.count
+            timer.interval = self.interval
+            timer.onTick = self.onCount
+            timer.onFinish = self.onFinish
+        }
 
     }
 
@@ -62,6 +74,13 @@ public enum TimerType {
         /// A callback closure invoked when the count up is finished.
         public var onFinish: TimerEvent.Callback?
 
+        internal func apply(to timer: Timer) {
+            timer.duration = self.count
+            timer.interval = self.interval
+            timer.onTick = self.onCount
+            timer.onFinish = self.onFinish
+        }
+
     }
 
     // MARK: Delay
@@ -78,6 +97,12 @@ public enum TimerType {
         /// A callback closure invoked after the delay is finished.
         public var onFinish: TimerEvent.Callback
 
+        internal func apply(to timer: Timer) {
+            timer.duration = self.delay
+            timer.interval = self.delay
+            timer.onFinish = self.onFinish
+        }
+
     }
 
     // MARK: Stopwatch
@@ -90,6 +115,10 @@ public enum TimerType {
     public struct Stopwatch: TimerArgs {
 
         // TODO:
+
+        internal func apply(to timer: Timer) {
+            // TODO:
+        }
 
     }
 
@@ -134,58 +163,13 @@ public enum TimerType {
             return Date() >= self.end
         }
 
-    }
-
-}
-
-// MARK: - Helpers
-
-extension TimerType {
-
-    /**
-     An internal helper method to apply the arguments of `self` to a timer.
-
-     - Parameters:
-        - timer: The timer to which arguments will be applied.
-     */
-    internal func applyArgs(to timer: Timer) {
-        switch self {
-        case let .basic(args):
-            timer.args = args
-            timer.onTick = args?.onTick
-            timer.onFinish = args?.onFinish
-
-        case let .countdown(args):
-            timer.args = args
-            timer.duration = args.count
-            timer.interval = args.interval
-            timer.onTick = args.onCount
-            timer.onFinish = args.onFinish
-
-        case let .countUp(args):
-            timer.args = args
-            timer.duration = args.count
-            timer.interval = args.interval
-            timer.onTick = args.onCount
-            timer.onFinish = args.onFinish
-
-        case let .delay(args):
-            timer.args = args
-            timer.duration = args.delay
-            timer.interval = args.delay
-            timer.onFinish = args.onFinish
-
-        case let .stopwatch(args):
-            timer.args = args
-            // TODO
-
-        case let .schedule(args):
-            timer.args = args
-            timer.customShouldTick = args.shouldTick
-            timer.customShouldFinish = args.shouldFinish
-            timer.onTick = args.onSchedule
-            timer.onFinish = args.onFinish
+        internal func apply(to timer: Timer) {
+            timer.customShouldTick = self.shouldTick
+            timer.customShouldFinish = self.shouldFinish
+            timer.onTick = self.onSchedule
+            timer.onFinish = self.onFinish
         }
+
     }
 
 }
@@ -193,5 +177,34 @@ extension TimerType {
 // MARK: - TimerArgs
 
 internal protocol TimerArgs {
+
+    /**
+     An internal helper method to apply the arguments of `self` to a timer.
+
+     - Parameters:
+         - timer: The timer to which arguments will be applied.
+     */
+    func apply(to timer: Timer)
+
+}
+
+internal extension TimerType {
+
+    var args: TimerArgs? {
+        switch self {
+        case .basic(let args):
+            return args
+        case .countdown(let args):
+            return args
+        case .countUp(let args):
+            return args
+        case .delay(let args):
+            return args
+        case .stopwatch(let args):
+            return args
+        case .schedule(let args):
+            return args
+        }
+    }
 
 }
