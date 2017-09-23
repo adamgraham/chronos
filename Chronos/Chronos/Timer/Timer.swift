@@ -16,7 +16,7 @@ public class Timer: NSObject {
     /// rate of 30 means the timer will update 30 times per second. The higher 
     /// the number, the more precise the timer will be but at a higher 
     /// computational cost.
-    static var defaultFrameRate: Foundation.TimeInterval = 30.0
+    static var defaultFrameRate: TimeInterval = 30.0
 
     // MARK: References
 
@@ -24,14 +24,14 @@ public class Timer: NSObject {
     weak public var delegate: TimerDelegate?
 
     /// The native timer object that invokes scheduled intervals.
-    fileprivate lazy var timer: Foundation.Timer = {
+    private lazy var timer: Foundation.Timer = {
         return self.createNativeTimer()
     }()
 
     // MARK: State & Type Properties
 
     /// The current state of `self`.
-    public fileprivate(set) var state = TimerState.new
+    public private(set) var state = TimerState.new
 
     /// The type of timer of `self`.
     public let type: TimerType
@@ -42,7 +42,7 @@ public class Timer: NSObject {
     /// means the timer will update 30 times per second. The higher the 
     /// number, the more precise the timer will be but at a higher computational 
     /// cost.
-    public var frameRate: Foundation.TimeInterval = Timer.defaultFrameRate {
+    public var frameRate: TimeInterval = Timer.defaultFrameRate {
         didSet {
             recreateNativeTimer()
         }
@@ -51,47 +51,47 @@ public class Timer: NSObject {
     /// An optional amount of time, in seconds, `self` will run before triggering a
     /// "tick" interval event. A nil value will invoke tick events at a fixed default 
     /// rate - see `Timer.defaultFrameRate` for more information.
-    public var interval: Foundation.TimeInterval?
+    public var interval: TimeInterval?
 
     /// An optional amount of time, in seconds, `self` will run before triggering a
     /// "finish" event. A nil value will run `self` indefinitely with no finish events 
     /// being invoked.
-    public var duration: Foundation.TimeInterval?
+    public var duration: TimeInterval?
 
     // MARK: Time Data Properties
 
     /// The amount of time, in seconds, `self` has been actively running. 
     ///
     /// **Note:** this value only gets set back to zero if `self` is restarted or reset.
-    public fileprivate(set) var elapsedTime: Foundation.TimeInterval = 0.0
+    public private(set) var elapsedTime: TimeInterval = 0.0
 
     /// The amount of time, in seconds, `self` has been actively running since 
     /// the last "tick" interval event.
-    public fileprivate(set) var elapsedTimeSinceLastTick: Foundation.TimeInterval = 0.0
+    public private(set) var elapsedTimeSinceLastTick: TimeInterval = 0.0
 
     /// The amount of time, in seconds, `self` has been actively running since
     /// the last "finish" event.
-    public fileprivate(set) var elapsedTimeSinceLastFinish: Foundation.TimeInterval = 0.0
+    public private(set) var elapsedTimeSinceLastFinish: TimeInterval = 0.0
 
     /// The timestamp of the last "tick" interval event. 
     /// Used to calculate the delta time between events.
-    public fileprivate(set) var timestampOfLastTick: Foundation.Date?
+    public private(set) var timestampOfLastTick: Date?
 
     /// The timestamp of the last "finish" event. 
     /// Used to calculate the delta time between events.
-    public fileprivate(set) var timestampOfLastFinish: Foundation.Date?
+    public private(set) var timestampOfLastFinish: Date?
 
     /// The amount of times `self` has triggered a "tick" interval event.
     ///
     /// **Note:** this value only gets set back to zero when `self` is reset. If `self` is
     /// started, stopped, or restarted, the value remains the same.
-    public fileprivate(set) var timesTicked: Swift.Int = 0
+    public private(set) var timesTicked: Int = 0
 
     /// The amount of times `self` has triggered a "finish" event.
     ///
     /// **Note:** this value only gets set back to zero when `self` is reset. If `self` is
     /// started, stopped, or restarted, the value remains the same.
-    public fileprivate(set) var timesFinished: Swift.Int = 0
+    public private(set) var timesFinished: Int = 0
 
     // MARK: Event Properties
 
@@ -146,7 +146,7 @@ public class Timer: NSObject {
      A helper method to invalidate the existing timer and create and assign a
      new one.
      */
-    fileprivate func recreateNativeTimer() {
+    private func recreateNativeTimer() {
         self.timer.invalidate()
         self.timer = createNativeTimer()
     }
@@ -162,13 +162,13 @@ extension Timer {
      
      - Returns: `true` if `self` is successfully started.
      */
-    @discardableResult public func start() -> Swift.Bool {
+    @discardableResult public func start() -> Bool {
         guard self.state.canStart else {
             return false
         }
 
         self.state = .active
-        self.timestampOfLastTick = Foundation.Date()
+        self.timestampOfLastTick = Date()
         self.delegate?.didStart(timer: self)
 
         return true
@@ -179,7 +179,7 @@ extension Timer {
      
      - Returns: `true` if `self` is successfully stopped.
      */
-    @discardableResult public func stop() -> Swift.Bool {
+    @discardableResult public func stop() -> Bool {
         guard self.state.canStop else {
             return false
         }
@@ -196,7 +196,7 @@ extension Timer {
 
      - Returns: `true` if `self` is successfully restarted.
      */
-    @discardableResult public func restart() -> Swift.Bool {
+    @discardableResult public func restart() -> Bool {
         guard self.state.canRestart else {
             return false
         }
@@ -215,7 +215,7 @@ extension Timer {
      
      - Returns: `true` if `self` is successfully reset.
      */
-    @discardableResult public func reset() -> Swift.Bool {
+    @discardableResult public func reset() -> Bool {
         guard self.state.canReset else {
             return false
         }
@@ -252,8 +252,8 @@ extension Timer {
      interval event is fired. If the elapsed time is greater than or equal to 
      `self.duration`, a "finish" event is fired.
      */
-    @objc fileprivate func updateTime() {
-        let timestamp = Foundation.Date()
+    @objc private func updateTime() {
+        let timestamp = Date()
         let deltaTime = timestamp.timeIntervalSince(self.timestampOfLastTick ?? timestamp)
 
         self.elapsedTime += deltaTime
@@ -276,7 +276,7 @@ extension Timer {
      - Parameters:
         - timestamp: The time at which the event is fired.
      */
-    fileprivate func tick(at timestamp: Foundation.Date) {
+    private func tick(at timestamp: Date) {
         guard self.state.canTick else {
             return
         }
@@ -302,7 +302,7 @@ extension Timer {
      - Parameters:
         - timestamp: The time at which the event is fired.
      */
-    fileprivate func finish(at timestamp: Foundation.Date) {
+    private func finish(at timestamp: Date) {
         guard self.state.canFinish else {
             return
         }

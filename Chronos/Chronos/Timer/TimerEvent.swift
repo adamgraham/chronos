@@ -10,7 +10,7 @@
 public struct TimerEvent {
 
     /// A typealias for a closure invoked upon a timer event.
-    public typealias Callback = (_ event: TimerEvent) -> Swift.Void
+    public typealias Callback = (_ event: TimerEvent) -> Void
 
     /// An enum to describe a type of timer event.
     public enum EventType {
@@ -25,15 +25,15 @@ public struct TimerEvent {
     /// The type of event of `self`.
     let type: TimerEvent.EventType
     /// The time and date that `self` was triggered.
-    let timestamp: Foundation.Date
+    let timestamp: Date
     /// The amount of time, in seconds, since the last event of the same type of
     /// the timer that triggered `self`.
-    let deltaTime: Foundation.TimeInterval
+    let deltaTime: TimeInterval
     /// The elapsed time, in seconds, of the timer that triggered `self`.
-    let timerLifetime: Foundation.TimeInterval
+    let timerLifetime: TimeInterval
     /// The number of times this same event has been triggered by the timer
     /// that triggered `self`.
-    let timesTriggered: Swift.Int
+    let timesTriggered: Int
 
     /**
      A helper method to determine if `self` is of a given type.
@@ -43,7 +43,7 @@ public struct TimerEvent {
      
      - Returns: `true` if `self` is of the event type `type`.
      */
-    public func isOfType(_ type: TimerEvent.EventType) -> Swift.Bool {
+    public func isOfType(_ type: TimerEvent.EventType) -> Bool {
         return self.type == type
     }
     
