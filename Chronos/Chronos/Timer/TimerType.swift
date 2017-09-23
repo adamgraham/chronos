@@ -24,9 +24,9 @@ public enum TimerType {
         public struct Args {
 
             /// A callback closure invoked every time the timer triggers a "tick" interval event.
-            var onTick: TimerEvent.Callback?
+            public var onTick: TimerEvent.Callback?
             /// A callback closure invoked every time the timer triggers a "finish" event.
-            var onFinish: TimerEvent.Callback?
+            public var onFinish: TimerEvent.Callback?
             
         }
 
@@ -48,13 +48,13 @@ public enum TimerType {
         public struct Args {
 
             /// The amount of time, in seconds, from which the timer counts down.
-            var count: CFTimeInterval
+            public var count: CFTimeInterval
             /// The amount of time, in seconds, between each count interval.
-            var interval: CFTimeInterval = 1.0
+            public var interval: CFTimeInterval = 1.0
             /// A callback closure invoked every count interval.
-            var onCount: TimerEvent.Callback
+            public var onCount: TimerEvent.Callback
             /// A callback closure invoked when the countdown is finished.
-            var onFinish: TimerEvent.Callback?
+            public var onFinish: TimerEvent.Callback?
 
         }
 
@@ -76,13 +76,13 @@ public enum TimerType {
         public struct Args {
 
             /// The amount of time, in seconds, to which the timer counts up.
-            var count: CFTimeInterval
+            public var count: CFTimeInterval
             /// The amount of time, in seconds, between each count interval.
-            var interval: CFTimeInterval = 1.0
+            public var interval: CFTimeInterval = 1.0
             /// A callback closure invoked every count interval.
-            var onCount: TimerEvent.Callback
+            public var onCount: TimerEvent.Callback
             /// A callback closure invoked when the count up is finished.
-            var onFinish: TimerEvent.Callback?
+            public var onFinish: TimerEvent.Callback?
             
         }
         
@@ -104,9 +104,9 @@ public enum TimerType {
         public struct Args {
 
             /// The amount of time, in seconds, the timer waits before finishing.
-            var delay: CFTimeInterval
+            public var delay: CFTimeInterval
             /// A callback closure invoked after the delay is finished.
-            var onFinish: TimerEvent.Callback
+            public var onFinish: TimerEvent.Callback
             
         }
 
