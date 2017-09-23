@@ -28,9 +28,9 @@ public struct TimerEvent {
     let timestamp: Date
     /// The amount of time, in seconds, since the last event of the same type of
     /// the timer that triggered `self`.
-    let deltaTime: TimeInterval
+    let deltaTime: CFTimeInterval
     /// The elapsed time, in seconds, of the timer that triggered `self`.
-    let timerLifetime: TimeInterval
+    let timerLifetime: CFTimeInterval
     /// The number of times this same event has been triggered by the timer
     /// that triggered `self`.
     let timesTriggered: Int

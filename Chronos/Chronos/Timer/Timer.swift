@@ -10,22 +10,16 @@
 /// time intervals and durations. Timers are based in seconds.
 public class Timer: NSObject {
 
-    // MARK: Static Properties
-
-    /// The default rate at which every timer will update. For example, a frame 
-    /// rate of 30 means the timer will update 30 times per second. The higher 
-    /// the number, the more precise the timer will be but at a higher 
-    /// computational cost.
-    static var defaultFrameRate: TimeInterval = 30.0
-
     // MARK: References
 
     /// A weak reference to the delegate assigned to `self`.
     weak public var delegate: TimerDelegate?
 
     /// The native timer object that invokes scheduled intervals.
-    private lazy var timer: Foundation.Timer = {
-        return self.createNativeTimer()
+    private lazy var timer: CADisplayLink = {
+        let displayLink = CADisplayLink(target: self, selector: #selector(updateTime))
+        displayLink.add(to: .main, forMode: .defaultRunLoopMode)
+        return displayLink
     }()
 
     // MARK: State & Type Properties
@@ -38,40 +32,30 @@ public class Timer: NSObject {
 
     // MARK: Time Behavior Properties
 
-    /// The rate at which `self` will update. For example, a frame rate of 30 
-    /// means the timer will update 30 times per second. The higher the 
-    /// number, the more precise the timer will be but at a higher computational 
-    /// cost.
-    public var frameRate: TimeInterval = Timer.defaultFrameRate {
-        didSet {
-            recreateNativeTimer()
-        }
-    }
-
     /// An optional amount of time, in seconds, `self` will run before triggering a
     /// "tick" interval event. A nil value will invoke tick events at a fixed default 
     /// rate - see `Timer.defaultFrameRate` for more information.
-    public var interval: TimeInterval?
+    public var interval: CFTimeInterval?
 
     /// An optional amount of time, in seconds, `self` will run before triggering a
     /// "finish" event. A nil value will run `self` indefinitely with no finish events 
     /// being invoked.
-    public var duration: TimeInterval?
+    public var duration: CFTimeInterval?
 
     // MARK: Time Data Properties
 
     /// The amount of time, in seconds, `self` has been actively running. 
     ///
     /// **Note:** this value only gets set back to zero if `self` is restarted or reset.
-    public private(set) var elapsedTime: TimeInterval = 0.0
+    public private(set) var elapsedTime: CFTimeInterval = 0.0
 
     /// The amount of time, in seconds, `self` has been actively running since 
     /// the last "tick" interval event.
-    public private(set) var elapsedTimeSinceLastTick: TimeInterval = 0.0
+    public private(set) var elapsedTimeSinceLastTick: CFTimeInterval = 0.0
 
     /// The amount of time, in seconds, `self` has been actively running since
     /// the last "finish" event.
-    public private(set) var elapsedTimeSinceLastFinish: TimeInterval = 0.0
+    public private(set) var elapsedTimeSinceLastFinish: CFTimeInterval = 0.0
 
     /// The timestamp of the last "tick" interval event. 
     /// Used to calculate the delta time between events.
@@ -126,31 +110,6 @@ public class Timer: NSObject {
         self.timer.invalidate()
     }
 
-    // MARK: Native Timer Creation
-
-    /**
-     A helper method to create and return a `Foundation.Timer` that
-     updates based on `self.frameRate`.
-     */
-    private func createNativeTimer() -> Foundation.Timer {
-        return Foundation.Timer.scheduledTimer(
-            timeInterval: 1.0 / self.frameRate,
-            target: self,
-            selector: #selector(updateTime),
-            userInfo: nil,
-            repeats: true
-        )
-    }
-
-    /**
-     A helper method to invalidate the existing timer and create and assign a
-     new one.
-     */
-    private func recreateNativeTimer() {
-        self.timer.invalidate()
-        self.timer = createNativeTimer()
-    }
-
 }
 
 // MARK: - State Control
@@ -159,7 +118,7 @@ extension Timer {
 
     /**
      A method to set `self` as active, allowing timer events to be fired.
-     
+
      - Returns: `true` if `self` is successfully started.
      */
     @discardableResult public func start() -> Bool {
@@ -168,7 +127,7 @@ extension Timer {
         }
 
         self.state = .active
-        self.timestampOfLastTick = Date()
+        self.timer.isPaused = false
         self.delegate?.didStart(timer: self)
 
         return true
@@ -185,6 +144,7 @@ extension Timer {
         }
 
         self.state = .inactive
+        self.timer.isPaused = true
         self.delegate?.didStop(timer: self)
 
         return true
@@ -230,8 +190,7 @@ extension Timer {
         self.timestampOfLastFinish = nil
         self.timesTicked = 0
         self.timesFinished = 0
-
-        recreateNativeTimer()
+        self.timer.isPaused = true
 
         self.delegate?.didReset(timer: self)
         
@@ -252,16 +211,15 @@ extension Timer {
      interval event is fired. If the elapsed time is greater than or equal to 
      `self.duration`, a "finish" event is fired.
      */
-    @objc private func updateTime() {
+    @objc private func updateTime(displaylink: CADisplayLink) {
         let timestamp = Date()
-        let deltaTime = timestamp.timeIntervalSince(self.timestampOfLastTick ?? timestamp)
+        let deltaTime = displaylink.targetTimestamp - displaylink.timestamp
 
         self.elapsedTime += deltaTime
         self.elapsedTimeSinceLastTick += deltaTime
         self.elapsedTimeSinceLastFinish += deltaTime
 
-        let interval = self.interval ?? 0.0
-        if self.elapsedTimeSinceLastTick >= interval {
+        if self.elapsedTimeSinceLastTick >= self.interval ?? 0.0 {
             tick(at: timestamp)
         }
 
@@ -310,6 +268,7 @@ extension Timer {
         stop()
 
         self.state = .finished
+        self.timer.isPaused = true
         self.timestampOfLastFinish = timestamp
         self.timesFinished += 1
 
