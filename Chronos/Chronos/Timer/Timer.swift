@@ -151,25 +151,6 @@ extension Timer {
     }
 
     /**
-     A method to start `self` with an elapsed time of zero.
-     See also the method `self.start()`.
-
-     - Returns: `true` if `self` is successfully restarted.
-     */
-    @discardableResult public func restart() -> Bool {
-        guard self.state.canRestart else {
-            return false
-        }
-
-        self.elapsedTime = 0.0
-        self.delegate?.didRestart(timer: self)
-
-        start()
-
-        return true
-    }
-
-    /**
      A method to reset `self`, invalidating the timer and setting all properties 
      back to their default values.
      
@@ -181,8 +162,6 @@ extension Timer {
         }
 
         self.state = .new
-        self.interval = nil
-        self.duration = nil
         self.elapsedTime = 0.0
         self.elapsedTimeSinceLastTick = 0.0
         self.elapsedTimeSinceLastFinish = 0.0

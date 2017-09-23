@@ -34,14 +34,6 @@ public protocol TimerDelegate: class {
     func didReset(timer: Timer)
 
     /**
-     A method to inform the delegate a timer restarted.
-
-     - Parameters:
-        - timer: The `Timer` on which the state change occured.
-     */
-    func didRestart(timer: Timer)
-
-    /**
      A method to inform the delegate a timer invoked a "tick" interval event.
 
      - Parameters:

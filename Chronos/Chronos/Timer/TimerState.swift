@@ -46,17 +46,6 @@ extension TimerState {
         }
     }
 
-    /// The ability for a timer to be restarted, based on the state of `self`.
-    /// Returns `true` if `self` is `active` or `inactive`.
-    internal var canRestart: Bool {
-        switch self {
-        case .active, .inactive:
-            return true
-        default:
-            return false
-        }
-    }
-
     /// The ability for a timer to be reset, based on the state of `self`.
     /// Always returns `true`.
     internal var canReset: Bool {
