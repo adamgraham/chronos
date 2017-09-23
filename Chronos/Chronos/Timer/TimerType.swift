@@ -17,12 +17,15 @@ public enum TimerType {
     /// A struct to represent the arguments of a `basic` timer.
     public struct Basic: TimerArgs {
 
+        /// The amount of time, in seconds, between each "tick" interval event.
+        public var interval: CFTimeInterval = 1.0
         /// A callback closure invoked every time the timer triggers a "tick" interval event.
         public var onTick: TimerEvent.Callback?
         /// A callback closure invoked every time the timer triggers a "finish" event.
         public var onFinish: TimerEvent.Callback?
 
         internal func apply(to timer: Timer) {
+            timer.interval = self.interval
             timer.onTick = self.onTick
             timer.onFinish = self.onFinish
         }
