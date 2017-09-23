@@ -21,7 +21,7 @@ public enum TimerType {
         private init() {}
 
         /// A struct to represent the arguments of a `TimerType.basic` timer.
-        public struct Args {
+        public struct Args: TimerArgs {
 
             /// A callback closure invoked every time the timer triggers a "tick" interval event.
             public var onTick: TimerEvent.Callback?
@@ -45,7 +45,7 @@ public enum TimerType {
         private init() {}
 
         /// A struct to represent the arguments of a `TimerType.countdown` timer.
-        public struct Args {
+        public struct Args: TimerArgs {
 
             /// The amount of time, in seconds, from which the timer counts down.
             public var count: CFTimeInterval
@@ -73,7 +73,7 @@ public enum TimerType {
         private init() {}
 
         /// A struct to represent the arguments of a `TimerType.countUp` timer.
-        public struct Args {
+        public struct Args: TimerArgs {
 
             /// The amount of time, in seconds, to which the timer counts up.
             public var count: CFTimeInterval
@@ -101,7 +101,7 @@ public enum TimerType {
         private init() {}
 
         /// A struct to represent the arguments of a `TimerType.delay` timer.
-        public struct Args {
+        public struct Args: TimerArgs {
 
             /// The amount of time, in seconds, the timer waits before finishing.
             public var delay: CFTimeInterval
@@ -125,7 +125,7 @@ public enum TimerType {
         private init() {}
 
         /// A struct to represent the arguments of a `TimerType.stopwatch` timer.
-        public struct Args {
+        public struct Args: TimerArgs {
 
             // TODO:
             
@@ -169,34 +169,43 @@ extension TimerType {
     internal func applyArgs(to timer: Timer) {
         switch self {
         case let .basic(args):
+            timer.args = args
             timer.onTick = args?.onTick
             timer.onFinish = args?.onFinish
 
         case let .countdown(args):
+            timer.args = args
             timer.duration = args.count
             timer.interval = args.interval
             timer.onTick = args.onCount
             timer.onFinish = args.onFinish
 
         case let .countUp(args):
+            timer.args = args
             timer.duration = args.count
             timer.interval = args.interval
             timer.onTick = args.onCount
             timer.onFinish = args.onFinish
 
         case let .delay(args):
+            timer.args = args
             timer.duration = args.delay
             timer.interval = args.delay
             timer.onFinish = args.onFinish
 
-        case let .stopwatch(_):
-            // TODO:
-            break
+        case let .stopwatch(args):
+            timer.args = args
+            // TODO
 
-        case let .schedule(_):
-            // TODO:
-            break
+        case let .schedule(args):
+            timer.args = args
         }
     }
+
+}
+
+// MARK: - TimerArgs
+
+internal protocol TimerArgs {
 
 }

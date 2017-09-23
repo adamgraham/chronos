@@ -42,6 +42,9 @@ public class Timer: NSObject {
     /// being invoked.
     public var duration: CFTimeInterval?
 
+    /// The arguments passed to `self` upon creation.
+    internal var args: TimerArgs?
+
     // MARK: Time Data Properties
 
     /// The amount of time, in seconds, `self` has been actively running. 
