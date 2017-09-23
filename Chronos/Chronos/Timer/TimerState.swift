@@ -52,26 +52,4 @@ extension TimerState {
         return true
     }
 
-    /// The ability for a timer to be ticked, based on the state of `self`.
-    /// Returns `true` if `self` is `active`.
-    internal var canTick: Bool {
-        switch self {
-        case .active:
-            return true
-        default:
-            return false
-        }
-    }
-
-    /// The ability for a timer to be finished, based on the state of `self`.
-    /// Returns `true` if `self` is `active` or `inactive`.
-    internal var canFinish: Bool {
-        switch self {
-        case .active, .inactive:
-            return true
-        default:
-            return false
-        }
-    }
-
 }

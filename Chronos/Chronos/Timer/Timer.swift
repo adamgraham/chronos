@@ -214,10 +214,6 @@ extension Timer {
         - timestamp: The time at which the event is fired.
      */
     private func tick(at timestamp: Date) {
-        guard self.state.canTick else {
-            return
-        }
-
         self.timestampOfLastTick = timestamp
         self.timesTicked += 1
 
@@ -227,7 +223,7 @@ extension Timer {
                                timerLifetime: self.elapsedTime,
                                timesTriggered: self.timesTicked)
 
-        self.delegate?.didTick(event, timer: self)
+        self.delegate?.timer(self, didTick: event)
         self.onTick?(event)
 
         self.elapsedTimeSinceLastTick = 0.0
@@ -240,10 +236,6 @@ extension Timer {
         - timestamp: The time at which the event is fired.
      */
     private func finish(at timestamp: Date) {
-        guard self.state.canFinish else {
-            return
-        }
-
         stop()
 
         self.state = .finished
@@ -257,7 +249,7 @@ extension Timer {
                                timerLifetime: self.elapsedTime,
                                timesTriggered: self.timesFinished)
 
-        self.delegate?.didFinish(event, timer: self)
+        self.delegate?.timer(self, didFinish: event)
         self.onFinish?(event)
 
         self.elapsedTimeSinceLastFinish = 0.0

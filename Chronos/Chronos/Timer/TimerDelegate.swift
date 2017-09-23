@@ -10,7 +10,7 @@
 public protocol TimerDelegate: class {
 
     /**
-     A method to inform the delegate a timer started.
+     A method to inform the delegate a timer was started.
      
      - Parameters:
         - timer: The `Timer` on which the state change occured.
@@ -18,7 +18,7 @@ public protocol TimerDelegate: class {
     func didStart(timer: Timer)
 
     /**
-     A method to inform the delegate a timer stopped.
+     A method to inform the delegate a timer was stopped.
 
      - Parameters:
         - timer: The `Timer` on which the state change occured.
@@ -26,7 +26,7 @@ public protocol TimerDelegate: class {
     func didStop(timer: Timer)
 
     /**
-     A method to inform the delegate a timer reset.
+     A method to inform the delegate a timer was reset.
 
      - Parameters:
         - timer: The `Timer` on which the state change occured.
@@ -40,7 +40,7 @@ public protocol TimerDelegate: class {
         - event: The data at the time of the "tick" event invocation.
         - timer: The `Timer` on which the event occured.
      */
-    func didTick(_ event: TimerEvent, timer: Timer)
+    func timer(_ timer: Timer, didTick event: TimerEvent)
 
     /**
      A method to inform the delegate a timer invoked a "finish" event.
@@ -49,6 +49,6 @@ public protocol TimerDelegate: class {
         - event: The data at the time of the "finish" event invocation.
         - timer: The `Timer` on which the event occured.
      */
-    func didFinish(_ event: TimerEvent, timer: Timer)
+    func timer(_ timer: Timer, didFinish event: TimerEvent)
     
 }
