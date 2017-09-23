@@ -32,6 +32,27 @@ public enum TimerType {
 
     }
 
+    // MARK: Stopwatch
+
+    /// A case to denote a timer that runs indefinitely, keeping track of the
+    /// elapsed time.
+    case stopwatch(args: TimerType.Stopwatch?)
+
+    /// A struct to represent the arguments of a `TimerType.stopwatch` timer.
+    public struct Stopwatch: TimerArgs {
+
+        /// The maximum time allowed for which the stopwatch can run.
+        public var timeout: CFTimeInterval? = nil
+        /// A callback closure invoked after the stopwatch times out.
+        public var onTimeout: TimerEvent.Callback? = nil
+
+        internal func apply(to timer: Timer) {
+            timer.duration = self.timeout
+            timer.onFinish = self.onTimeout
+        }
+
+    }
+
     // MARK: Countdown
 
     /// A case to denote a timer that counts down from a set amount of time at
@@ -108,23 +129,6 @@ public enum TimerType {
 
     }
 
-    // MARK: Stopwatch
-
-    /// A case to denote a timer that runs indefinitely, keeping track of the
-    /// elapsed time between lapped intervals.
-    case stopwatch(args: TimerType.Stopwatch)
-
-    /// A struct to represent the arguments of a `TimerType.stopwatch` timer.
-    public struct Stopwatch: TimerArgs {
-
-        // TODO:
-
-        internal func apply(to timer: Timer) {
-            // TODO:
-        }
-
-    }
-
     // MARK: Schedule
 
     /// A case to denote a timer that invokes scheduled events with a given
@@ -197,13 +201,13 @@ internal extension TimerType {
         switch self {
         case .basic(let args):
             return args ?? TimerType.Basic()
+        case .stopwatch(let args):
+            return args ?? TimerType.Stopwatch()
         case .countdown(let args):
             return args
         case .countUp(let args):
             return args
         case .delay(let args):
-            return args
-        case .stopwatch(let args):
             return args
         case .schedule(let args):
             return args
