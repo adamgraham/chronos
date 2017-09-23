@@ -20,9 +20,9 @@ public enum TimerType {
         /// The amount of time, in seconds, between each "tick" interval event.
         public var interval: CFTimeInterval = 1.0
         /// A callback closure invoked every time the timer triggers a "tick" interval event.
-        public var onTick: TimerEvent.Callback?
+        public var onTick: TimerEvent.Callback? = nil
         /// A callback closure invoked every time the timer triggers a "finish" event.
-        public var onFinish: TimerEvent.Callback?
+        public var onFinish: TimerEvent.Callback? = nil
 
         internal func apply(to timer: Timer) {
             timer.interval = self.interval
@@ -193,10 +193,10 @@ internal protocol TimerArgs {
 
 internal extension TimerType {
 
-    var args: TimerArgs? {
+    var args: TimerArgs {
         switch self {
         case .basic(let args):
-            return args
+            return args ?? TimerType.Basic()
         case .countdown(let args):
             return args
         case .countUp(let args):

@@ -100,7 +100,7 @@ public class Timer: NSObject {
     public required init(type: TimerType) {
         self.type = type
         super.init()
-        type.args?.apply(to: self)
+        type.args.apply(to: self)
     }
 
     /**
