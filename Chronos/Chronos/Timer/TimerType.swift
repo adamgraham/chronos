@@ -135,8 +135,8 @@ public enum TimerType {
 
     // MARK: Schedule
 
-    /// A case to denote a timer that invokes scheduled events at specific 
-    /// dates/times and a given frequency pattern.
+    /// A case to denote a timer that invokes scheduled events with a given
+    /// frequency pattern between a start and end date/time.
     case schedule(args: TimerType.Schedule.Args)
 
     /// A namespace class to represent a `TimerType.schedule` timer.
@@ -146,10 +146,48 @@ public enum TimerType {
         private init() {}
 
         /// A struct to represent the arguments of a `TimerType.schedule` timer.
-        public struct Args {
+        public struct Args: TimerArgs {
 
-            // TODO:
+            /// The date/time after which the timer starts firing events.
+            public var start: Date
+            /// The date/time after which the timer stops firing events.
+            public var end: Date
+            /// The frequency pattern in which timer events are fired.
+            public var frequency: Frequency
+            /// A callback closure invoked along the frequency pattern.
+            public var onSchedule: TimerEvent.Callback
+            /// A callback closure invoked after all scheduled events are finished.
+            public var onFinish: TimerEvent.Callback?
 
+        }
+
+        /// A typealias to represent a frequency pattern that returns `true` if the
+        /// current date/time contains an event.
+        public typealias Frequency = (_ current: Date, _ start: Date, _ end: Date) -> Bool
+
+        /// A custom behavioral method that tells a timer if it should trigger a
+        /// "tick" interval event.
+        internal static func shouldTick(_ timer: Timer) -> Bool {
+            guard let args = timer.args as? TimerType.Schedule.Args else {
+                return false
+            }
+
+            let current = Date()
+            guard current >= args.start else {
+                return false
+            }
+
+            return args.frequency(current, args.start, args.end)
+        }
+
+        /// A custom behavioral method that tells a timer if it should trigger a
+        /// "finish" event.
+        internal static func shouldFinish(_ timer: Timer) -> Bool {
+            guard let args = timer.args as? TimerType.Schedule.Args else {
+                return false
+            }
+
+            return Date() >= args.end
         }
         
     }
@@ -199,6 +237,10 @@ extension TimerType {
 
         case let .schedule(args):
             timer.args = args
+            timer.customShouldTick = TimerType.Schedule.shouldTick
+            timer.customShouldFinish = TimerType.Schedule.shouldFinish
+            timer.onTick = args.onSchedule
+            timer.onFinish = args.onFinish
         }
     }
 

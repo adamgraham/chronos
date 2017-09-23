@@ -88,6 +88,12 @@ public class Timer: NSObject {
     /// A callback closure invoked every time `self` triggers a "finish" event.
     public var onFinish: TimerEvent.Callback?
 
+    /// A custom closure used to ask if the timer should trigger a "tick" interval event.
+    internal var customShouldTick: ((Timer) -> Bool)?
+
+    /// A custom closure used to ask if the timer should trigger a "finish" event.
+    internal var customShouldFinish: ((Timer) -> Bool)?
+
     // MARK: Initialization
 
     /**
@@ -185,14 +191,6 @@ extension Timer {
 
 extension Timer {
 
-    /**
-     A method to update the elapsed time of `self` by the delta time of the
-     previous invocation of this method. 
-     
-     If the elapsed time is greater than or equal to `self.interval`, a "tick" 
-     interval event is fired. If the elapsed time is greater than or equal to 
-     `self.duration`, a "finish" event is fired.
-     */
     @objc private func updateTime(displaylink: CADisplayLink) {
         let timestamp = Date()
         let deltaTime = displaylink.targetTimestamp - displaylink.timestamp
@@ -201,21 +199,31 @@ extension Timer {
         self.elapsedTimeSinceLastTick += deltaTime
         self.elapsedTimeSinceLastFinish += deltaTime
 
-        if self.elapsedTimeSinceLastTick >= self.interval ?? 0.0 {
+        if (self.customShouldTick ?? Timer.shouldTick)(self) {
             tick(at: timestamp)
         }
 
-        if let duration = self.duration, self.elapsedTimeSinceLastFinish >= duration {
+        if (self.customShouldTick ?? Timer.shouldFinish)(self) {
             finish(at: timestamp)
         }
     }
 
-    /**
-     A method to fire a "tick" interval event.
+    private static func shouldTick(_ timer: Timer) -> Bool {
+        if let interval = timer.interval, timer.elapsedTimeSinceLastTick >= interval {
+            return true
+        } else {
+            return false
+        }
+    }
 
-     - Parameters:
-        - timestamp: The time at which the event is fired.
-     */
+    private static func shouldFinish(_ timer: Timer) -> Bool {
+        if let duration = timer.duration, timer.elapsedTimeSinceLastFinish >= duration {
+            return true
+        } else {
+            return false
+        }
+    }
+
     private func tick(at timestamp: Date) {
         self.timestampOfLastTick = timestamp
         self.timesTicked += 1
@@ -232,12 +240,6 @@ extension Timer {
         self.elapsedTimeSinceLastTick = 0.0
     }
 
-    /**
-     A method to fire a "finish" event.
-     
-     - Parameters:
-        - timestamp: The time at which the event is fired.
-     */
     private func finish(at timestamp: Date) {
         stop()
 
