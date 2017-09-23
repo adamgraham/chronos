@@ -47,9 +47,14 @@ extension TimerState {
     }
 
     /// The ability for a timer to be reset, based on the state of `self`.
-    /// Always returns `true`.
+    /// Returns `true` if `self` is not `new`.
     internal var canReset: Bool {
-        return true
+        switch self {
+        case .new:
+            return false
+        default:
+            return true
+        }
     }
 
 }
