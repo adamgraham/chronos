@@ -1,9 +1,9 @@
 # Chronos
-> A Swift iOS Time & Date utility framework by [Adam Graham](http://adamgraham.io).
+> An iOS utility framework to create different types of timers.
 
 ### Description
 
-Chronos (work in progress) provides utility classes and extensions for handling time and dates. Primarily, the framework provides a simple but powerful `Chronos.Timer` class that provides more control and flexibility than the native iOS `Foundation.Timer`. The timer object can be created from the following supported types:
+Chronos provides a simple but powerful `Chronos.Timer` class that provides more control and flexibility than the native iOS `Foundation.Timer`. The timer object can be created from the following supported types:
 
 - `.basic` - a generic timer that is controlled manually
 - `.stopwatch` - a timer that runs indefinitely, keeping track of the elapsed time
@@ -11,8 +11,6 @@ Chronos (work in progress) provides utility classes and extensions for handling 
 - `.countUp` - a timer that counts up to a set amount of time at a specific interval
 - `.delay` - a timer that invokes a single completion event after a set amount of time
 - `.schedule` - a timer that invokes scheduled events with a frequency pattern between a start and end period
-
-On top of the timer class, Chronos provides miscellaneous helper extensions for handling common date and time logic. *This section of the framework is still in development. Any suggestions/requests are more than welcome.*
 
 ### License
 ```

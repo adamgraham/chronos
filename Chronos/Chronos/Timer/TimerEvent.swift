@@ -6,45 +6,34 @@
 //  Copyright © 2016 Adam Graham. All rights reserved.
 //
 
-/// A struct to contain the data of a timer event.
+import Foundation
+
+/// The metadata of a timer event.
 public struct TimerEvent {
 
-    /// A typealias for a closure invoked upon a timer event.
+    /// The method signature of a "callback" closure. A callback is invoked each time a timer
+    /// event is fired.
     public typealias Callback = (_ event: TimerEvent) -> Void
 
-    /// An enum to describe a type of timer event.
+    /// A type of event that can be fired from a timer.
     public enum EventType {
 
-        /// A case to denote an event of a timer interval update.
+        /// An event to signal a single interval update.
         case tick
-        /// A case to denote an event of the end of interval updates of a timer.
+        /// An event to signal the end of interval updates.
         case finish
         
     }
 
-    /// The type of event of `self`.
-    let type: TimerEvent.EventType
-    /// The time and date that `self` was triggered.
-    let timestamp: Date
-    /// The amount of time, in seconds, since the last event of the same type of
-    /// the timer that triggered `self`.
-    let deltaTime: CFTimeInterval
-    /// The elapsed time, in seconds, of the timer that triggered `self`.
-    let timerLifetime: CFTimeInterval
-    /// The number of times this same event has been triggered by the timer
-    /// that triggered `self`.
-    let timesTriggered: Int
-
-    /**
-     A helper method to determine if `self` is of a given type.
-     
-     - Parameters:
-        - type: The event type to compare with `self`'s type.
-     
-     - Returns: `true` if `self` is of the event type `type`.
-     */
-    public func isOfType(_ type: TimerEvent.EventType) -> Bool {
-        return self.type == type
-    }
+    /// The type of event.
+    public let type: EventType
+    /// The timestamp at the moment the event was fired.
+    public let timestamp: Date
+    /// The amount of seconds since the last event of the same type was fired from the timer.
+    public let deltaTime: TimeInterval
+    /// The total elapsed seconds of the timer that fired the event.
+    public let timerLifetime: TimeInterval
+    /// The number of times the same event type has been fired by the timer.
+    public let timesFired: Int
     
 }

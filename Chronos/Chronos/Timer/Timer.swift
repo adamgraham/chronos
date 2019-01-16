@@ -6,106 +6,96 @@
 //  Copyright © 2016 Adam Graham. All rights reserved.
 //
 
-/// A class to create a timer object that fires callback events at specific 
-/// time intervals and durations. Timers are based in seconds.
+import Foundation
+
+/// A timer that schedules and fires intervaled events.
 public class Timer: NSObject {
 
     // MARK: References
 
-    /// A weak reference to the delegate assigned to `self`.
-    weak public var delegate: TimerDelegate?
+    /// A reference to the object listening to the timer events.
+    public weak var delegate: TimerDelegate?
 
-    /// The native timer object that invokes scheduled intervals.
+    /// The native timer that invokes "tick" events based on display vsync.
     private lazy var timer: CADisplayLink = {
         let displayLink = CADisplayLink(target: self, selector: #selector(updateTime))
-        displayLink.add(to: .main, forMode: .defaultRunLoopMode)
+        displayLink.add(to: .main, forMode: RunLoop.Mode.default)
         return displayLink
     }()
 
     // MARK: State & Type Properties
 
-    /// The current state of `self`.
+    /// The state of the timer.
     public private(set) var state = TimerState.new
 
-    /// The type of timer of `self`.
+    /// The type of timer.
     public let type: TimerType
 
     // MARK: Time Behavior Properties
 
-    /// An optional amount of time, in seconds, `self` will run before triggering a
-    /// "tick" interval event. A nil value will invoke tick events at a fixed default 
-    /// rate - see `Timer.defaultFrameRate` for more information.
-    public var interval: CFTimeInterval?
+    /// The amount of seconds the timer will run before firing a "tick" event. A nil value will
+    /// prevent these events from being fired, if not necessary. The timer will still run if not set.
+    public var interval: TimeInterval?
 
-    /// An optional amount of time, in seconds, `self` will run before triggering a
-    /// "finish" event. A nil value will run `self` indefinitely with no finish events 
-    /// being invoked.
-    public var duration: CFTimeInterval?
+    /// The amount of seconds the timer will run before firing a "finish" event. A nil value will
+    /// prevent these events from being fired, if not necessary. The timer will run indefinitely if
+    /// not set.
+    public var duration: TimeInterval?
 
     // MARK: Time Data Properties
 
-    /// The amount of time, in seconds, `self` has been actively running. 
+    /// The total amount of seconds the timer has been running.
     ///
-    /// **Note:** this value only gets set back to zero if `self` is restarted or reset.
-    public private(set) var elapsedTime: CFTimeInterval = 0.0
+    /// This value is only set back to zero when the timer is restarted or reset.
+    public private(set) var elapsedTime: TimeInterval = 0.0
 
-    /// The amount of time, in seconds, `self` has been actively running since 
-    /// the last "tick" interval event.
-    public private(set) var elapsedTimeSinceLastTick: CFTimeInterval = 0.0
+    /// The amount of seconds the timer has been running since the last `tick` event was fired.
+    public private(set) var elapsedTimeSinceLastTick: TimeInterval = 0.0
 
-    /// The amount of time, in seconds, `self` has been actively running since
-    /// the last "finish" event.
-    public private(set) var elapsedTimeSinceLastFinish: CFTimeInterval = 0.0
+    /// The amount of seconds the timer has been running since the last `finish` event was fired.
+    public private(set) var elapsedTimeSinceLastFinish: TimeInterval = 0.0
 
-    /// The timestamp of the last "tick" interval event. 
-    /// Used to calculate the delta time between events.
+    /// The timestamp of the last `tick` event, used to calculate the delta time between events.
     public private(set) var timestampOfLastTick: Date?
 
-    /// The timestamp of the last "finish" event. 
-    /// Used to calculate the delta time between events.
+    /// The timestamp of the last `finish` event, used to calculate the delta time between events.
     public private(set) var timestampOfLastFinish: Date?
 
-    /// The amount of times `self` has triggered a "tick" interval event.
+    /// The amount of times the timer has fired a `tick` event.
     ///
-    /// **Note:** this value only gets set back to zero when `self` is reset. If `self` is
-    /// started, stopped, or restarted, the value remains the same.
+    /// This value is only set back to zero when the timer is reset.
     public private(set) var timesTicked: Int = 0
 
-    /// The amount of times `self` has triggered a "finish" event.
+    /// The amount of times the timer has fired a `finish` event.
     ///
-    /// **Note:** this value only gets set back to zero when `self` is reset. If `self` is
-    /// started, stopped, or restarted, the value remains the same.
+    /// This value is only set back to zero when the timer is reset.
     public private(set) var timesFinished: Int = 0
 
     // MARK: Event Properties
 
-    /// A callback closure invoked every time `self` triggers a "tick" interval event.
+    /// The callback closure invoked each time a `tick` event is fired.
     public var onTick: TimerEvent.Callback?
 
-    /// A callback closure invoked every time `self` triggers a "finish" event.
+    /// The callback closure invoked each time a `finish` event is fired.
     public var onFinish: TimerEvent.Callback?
 
-    /// A custom closure used to ask if the timer should trigger a "tick" interval event.
+    /// A custom closure to ask if the timer should fire a `tick` event.
     internal var customShouldTick: ((Timer) -> Bool)?
 
-    /// A custom closure used to ask if the timer should trigger a "finish" event.
+    /// A custom closure to ask if the timer should fire a `finish` event.
     internal var customShouldFinish: ((Timer) -> Bool)?
 
     // MARK: Initialization
 
-    /**
-     A required initializer to create a `Timer` of a given type.
-       - Parameter type: The type of timer to create
-     */
+    /// Creates a timer of a given type.
+    /// - parameter type: The type of timer to create.
     public required init(type: TimerType) {
         self.type = type
         super.init()
         type.args.apply(to: self)
     }
 
-    /**
-     A convenience initializer to create a basic `Timer`.
-     */
+    /// Creates a `basic` timer.
     public convenience override init() {
         self.init(type: .basic(args: nil))
     }
@@ -122,11 +112,8 @@ public class Timer: NSObject {
 
 extension Timer {
 
-    /**
-     A method to set `self` as active, allowing timer events to be fired.
-
-     - Returns: `true` if `self` is successfully started.
-     */
+    /// Starts the timer, allowing events to be fired and elapsed time to be tracked.
+    /// - returns: `true` if the timer was successfully started.
     @discardableResult public func start() -> Bool {
         guard self.state.canStart else {
             return false
@@ -139,11 +126,8 @@ extension Timer {
         return true
     }
 
-    /**
-     A method to set `self` as inactive, preventing timer events from firing.
-     
-     - Returns: `true` if `self` is successfully stopped.
-     */
+    /// Stops the timer, preventing events from firing and pausing the elapsed time.
+    /// - returns: `true` if the timer was successfully stopped.
     @discardableResult public func stop() -> Bool {
         guard self.state.canStop else {
             return false
@@ -156,12 +140,10 @@ extension Timer {
         return true
     }
 
-    /**
-     A method to reset `self`, invalidating the timer and setting all properties 
-     back to their default values.
-     
-     - Returns: `true` if `self` is successfully reset.
-     */
+    /// Resets the timer to a new state, setting all data properties back to zero, e.g., elapsed
+    /// time, event counters, etc. The timer will need to be started again before new events are
+    /// fired and data is gathered.
+    /// - returns: `true` if the timer was successfully reset.
     @discardableResult public func reset() -> Bool {
         guard self.state.canReset else {
             return false
@@ -229,7 +211,7 @@ extension Timer {
                                timestamp: timestamp,
                                deltaTime: self.elapsedTimeSinceLastTick,
                                timerLifetime: self.elapsedTime,
-                               timesTriggered: self.timesTicked)
+                               timesFired: self.timesTicked)
 
         self.delegate?.timer(self, didTick: event)
         self.onTick?(event)
@@ -249,7 +231,7 @@ extension Timer {
                                timestamp: timestamp,
                                deltaTime: self.elapsedTimeSinceLastFinish,
                                timerLifetime: self.elapsedTime,
-                               timesTriggered: self.timesFinished)
+                               timesFired: self.timesFinished)
 
         self.delegate?.timer(self, didFinish: event)
         self.onFinish?(event)

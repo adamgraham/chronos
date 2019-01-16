@@ -6,16 +6,16 @@
 //  Copyright © 2016 Adam Graham. All rights reserved.
 //
 
-/// An enum to describe the state of a timer.
+/// The state of a timer.
 public enum TimerState {
 
-    /// A case to denote a timer is brand new or freshly reset.
+    /// The state of a timer that is brand new or has just been reset.
     case new
-    /// A case to denote a timer is running.
+    /// The state of a timer that has been started and is actively running.
     case active
-    /// A case to denote a timer is not running.
+    /// The state of a timer that has been stopped and is not running.
     case inactive
-    /// A case to denote a timer has finished running.
+    /// The state of a timer that has reached its duration and is now finished.
     case finished
 
 }
@@ -24,8 +24,8 @@ public enum TimerState {
 
 extension TimerState {
 
-    /// The ability for a timer to be started, based on the state of `self`.
-    /// Returns `true` if `self` is `new` or `inactive`.
+    /// Returns `true` if a timer can be started -
+    /// must currently be in a `new` or `inactive` state.
     internal var canStart: Bool {
         switch self {
         case .new, .inactive:
@@ -35,8 +35,8 @@ extension TimerState {
         }
     }
 
-    /// The ability for a timer to be stopped, based on the state of `self`.
-    /// Returns `true` if `self` is `active`.
+    /// Returns `true` if a timer can be stopped -
+    /// must currently be in an `active` state.
     internal var canStop: Bool {
         switch self {
         case .active:
@@ -46,8 +46,8 @@ extension TimerState {
         }
     }
 
-    /// The ability for a timer to be reset, based on the state of `self`.
-    /// Returns `true` if `self` is not `new`.
+    /// Returns `true` if a timer can be reset -
+    /// must *not* be in a `new` state.
     internal var canReset: Bool {
         switch self {
         case .new:

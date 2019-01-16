@@ -6,49 +6,29 @@
 //  Copyright © 2016 Adam Graham. All rights reserved.
 //
 
-/// A protocol to inform a `Timer`'s delegate of state changes and events.
+/// A type to which timer events can be delegated.
 public protocol TimerDelegate: class {
 
-    /**
-     A method to inform the delegate a timer was started.
-     
-     - Parameters:
-        - timer: The `Timer` on which the state change occured.
-     */
+    /// Informs the delegate a timer was started.
+    /// - parameter timer: The timer that was started.
     func didStart(timer: Timer)
 
-    /**
-     A method to inform the delegate a timer was stopped.
-
-     - Parameters:
-        - timer: The `Timer` on which the state change occured.
-     */
+    /// Informs the delegate a timer was stopped.
+    /// - parameter timer: The timer that was stopped.
     func didStop(timer: Timer)
 
-    /**
-     A method to inform the delegate a timer was reset.
-
-     - Parameters:
-        - timer: The `Timer` on which the state change occured.
-     */
+    /// Informs the delegate a timer was reset.
+    /// - parameter timer: The timer that was reset.
     func didReset(timer: Timer)
 
-    /**
-     A method to inform the delegate a timer invoked a "tick" interval event.
-
-     - Parameters:
-        - event: The data at the time of the "tick" event invocation.
-        - timer: The `Timer` on which the event occured.
-     */
+    /// Informs the delegate a timer fired a `tick` event.
+    /// - parameter timer: The timer that fired the event.
+    /// - parameter event: The event metadata.
     func timer(_ timer: Timer, didTick event: TimerEvent)
 
-    /**
-     A method to inform the delegate a timer invoked a "finish" event.
-
-     - Parameters:
-        - event: The data at the time of the "finish" event invocation.
-        - timer: The `Timer` on which the event occured.
-     */
+    /// Informs the delegate a timer fired a `finish` event.
+    /// - parameter timer: The timer that fired the event.
+    /// - parameter event: The event metadata.
     func timer(_ timer: Timer, didFinish event: TimerEvent)
     
 }
