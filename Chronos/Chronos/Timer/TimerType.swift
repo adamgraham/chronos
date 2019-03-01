@@ -145,9 +145,9 @@ public enum TimerType {
         /// - parameter timer: The timer that is asking to be informed.
         internal func shouldTick(_ timer: Timer) -> Bool {
             let current = Date()
-            guard current >= self.start else {
-                return false
-            }
+
+            guard current >= self.start else { return false }
+            guard current < self.end else { return false }
 
             return self.frequency(current, self.start, self.end)
         }
