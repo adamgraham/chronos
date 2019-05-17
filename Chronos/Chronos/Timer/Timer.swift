@@ -190,17 +190,15 @@ extension Timer {
     private static func shouldTick(_ timer: Timer) -> Bool {
         if let interval = timer.interval, timer.elapsedTimeSinceLastTick >= interval {
             return true
-        } else {
-            return false
         }
+        return false
     }
 
     private static func shouldFinish(_ timer: Timer) -> Bool {
         if let duration = timer.duration, timer.elapsedTimeSinceLastFinish >= duration {
             return true
-        } else {
-            return false
         }
+        return false
     }
 
     private func tick(at timestamp: Date) {
