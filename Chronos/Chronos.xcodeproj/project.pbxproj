@@ -188,7 +188,7 @@
 			};
 			buildConfigurationList = 9D9660D31DBEB86800596268 /* Build configuration list for PBXProject "Chronos" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
