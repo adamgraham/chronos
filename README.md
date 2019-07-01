@@ -1,7 +1,13 @@
 # Chronos
 > An iOS utility framework to create different types of timers.
 
-### Description
+## Requirements
+
+- iOS 10.0+
+- Swift 5.0+
+- Xcode 10.2+
+
+## Usage
 
 Chronos provides a simple but powerful `Chronos.Timer` class that provides more control and flexibility than the native iOS `Foundation.Timer`. The timer object can be created from the following supported types:
 
@@ -12,7 +18,7 @@ Chronos provides a simple but powerful `Chronos.Timer` class that provides more 
 - `.delay` - a timer that invokes a single completion event after a set amount of time
 - `.schedule` - a timer that invokes scheduled events with a frequency pattern between a start and end period
 
-### License
+## License
 ```
 MIT License
 
