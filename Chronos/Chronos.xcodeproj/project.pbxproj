@@ -96,8 +96,8 @@
 			isa = PBXGroup;
 			children = (
 				9D9660E91DBEB86800596268 /* Info.plist */,
-				9D05582B2228E84D00A5D97B /* TimerTest.swift */,
 				9D0558272228DAC500A5D97B /* TimerStateTest.swift */,
+				9D05582B2228E84D00A5D97B /* TimerTest.swift */,
 				9D0558292228DC9F00A5D97B /* TimerTypeTest.swift */,
 			);
 			path = ChronosTests;
