@@ -15,8 +15,8 @@ class TimerTest: XCTestCase {
     // MARK: Initialization Tests
 
     func testRequiredInit() {
-        let type = TimerType.stopwatch(args: nil)
-        let timer = Chronos.Timer(type: type)
+        let type = TimerType.stopwatch(nil)
+        let timer = Chronos.Timer(type)
 
         switch timer.type {
         case .stopwatch:

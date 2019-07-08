@@ -89,7 +89,7 @@ public class Timer: NSObject {
 
     /// Creates a timer of a given type.
     /// - parameter type: The type of timer to create.
-    public required init(type: TimerType) {
+    public required init(_ type: TimerType) {
         self.type = type
         super.init()
         type.args.apply(to: self)
@@ -97,7 +97,7 @@ public class Timer: NSObject {
 
     /// Creates a `basic` timer.
     public convenience override init() {
-        self.init(type: .basic(args: nil))
+        self.init(.basic(nil))
     }
 
     // MARK: Deinitialization

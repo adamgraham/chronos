@@ -20,9 +20,9 @@ class TimerTypeTest: XCTestCase {
     private let frequency: TimerType.Schedule.Frequency = { _,_,_ in return true }
 
     func testBasic() {
+        let timer = Chronos.Timer()
         let args = TimerType.Basic(interval: 1.0, onTick: onTick, onFinish: onFinish)
-        let type = TimerType.basic(args: args)
-        let timer = Chronos.Timer(type: type)
+        let type = TimerType.basic(args)
         type.args.apply(to: timer)
 
         XCTAssertEqual(timer.interval, args.interval)
@@ -31,8 +31,8 @@ class TimerTypeTest: XCTestCase {
     }
 
     func testBasicNoArgs() {
-        let type = TimerType.basic(args: nil)
-        let timer = Chronos.Timer(type: type)
+        let timer = Chronos.Timer()
+        let type = TimerType.basic(nil)
         type.args.apply(to: timer)
 
         XCTAssertEqual(timer.interval, 1.0)
@@ -41,9 +41,9 @@ class TimerTypeTest: XCTestCase {
     }
 
     func testStopwatch() {
+        let timer = Chronos.Timer()
         let args = TimerType.Stopwatch(timeout: 60.0, onTimeout: onTimeout)
-        let type = TimerType.stopwatch(args: args)
-        let timer = Chronos.Timer(type: type)
+        let type = TimerType.stopwatch(args)
         type.args.apply(to: timer)
 
         XCTAssertEqual(timer.duration, args.timeout)
@@ -51,8 +51,8 @@ class TimerTypeTest: XCTestCase {
     }
 
     func testStopwatchNoArgs() {
-        let type = TimerType.stopwatch(args: nil)
-        let timer = Chronos.Timer(type: type)
+        let timer = Chronos.Timer()
+        let type = TimerType.stopwatch(nil)
         type.args.apply(to: timer)
 
         XCTAssertNil(timer.duration)
@@ -60,9 +60,9 @@ class TimerTypeTest: XCTestCase {
     }
 
     func testCountdown() {
+        let timer = Chronos.Timer()
         let args = TimerType.Countdown(count: 3.0, interval: 1.0, onCount: onCount, onFinish: onFinish)
-        let type = TimerType.countdown(args: args)
-        let timer = Chronos.Timer(type: type)
+        let type = TimerType.countdown(args)
         type.args.apply(to: timer)
 
         XCTAssertEqual(timer.duration, args.count)
@@ -72,9 +72,9 @@ class TimerTypeTest: XCTestCase {
     }
 
     func testCountUp() {
+        let timer = Chronos.Timer()
         let args = TimerType.CountUp(count: 3.0, interval: 1.0, onCount: onCount, onFinish: onFinish)
-        let type = TimerType.countUp(args: args)
-        let timer = Chronos.Timer(type: type)
+        let type = TimerType.countUp(args)
         type.args.apply(to: timer)
 
         XCTAssertEqual(timer.duration, args.count)
@@ -84,9 +84,9 @@ class TimerTypeTest: XCTestCase {
     }
 
     func testDelay() {
+        let timer = Chronos.Timer()
         let args = TimerType.Delay(delay: 30.0, onFinish: onFinish)
-        let type = TimerType.delay(args: args)
-        let timer = Chronos.Timer(type: type)
+        let type = TimerType.delay(args)
         type.args.apply(to: timer)
 
         XCTAssertEqual(timer.duration, args.delay)
@@ -95,9 +95,9 @@ class TimerTypeTest: XCTestCase {
     }
 
     func testSchedule() {
+        let timer = Chronos.Timer()
         let args = TimerType.Schedule(start: Date.distantPast, end: Date.distantFuture, frequency: frequency, onSchedule: onSchedule, onFinish: onFinish)
-        let type = TimerType.schedule(args: args)
-        let timer = Chronos.Timer(type: type)
+        let type = TimerType.schedule(args)
         type.args.apply(to: timer)
 
         XCTAssertNotNil(timer.customShouldTick)
@@ -107,9 +107,9 @@ class TimerTypeTest: XCTestCase {
     }
 
     func testScheduleShouldTick() {
+        let timer = Chronos.Timer()
         var args = TimerType.Schedule(start: Date.distantPast, end: Date.distantFuture, frequency: frequency, onSchedule: onSchedule, onFinish: onFinish)
-        let type = TimerType.schedule(args: args)
-        let timer = Chronos.Timer(type: type)
+        let type = TimerType.schedule(args)
         type.args.apply(to: timer)
 
         args.start = Date.distantFuture
@@ -126,9 +126,9 @@ class TimerTypeTest: XCTestCase {
     }
 
     func testScheduleShouldFinish() {
+        let timer = Chronos.Timer()
         var args = TimerType.Schedule(start: Date.distantPast, end: Date.distantFuture, frequency: frequency, onSchedule: onSchedule, onFinish: onFinish)
-        let type = TimerType.schedule(args: args)
-        let timer = Chronos.Timer(type: type)
+        let type = TimerType.schedule(args)
         type.args.apply(to: timer)
 
         args.start = Date.distantPast
