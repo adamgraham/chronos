@@ -100,6 +100,42 @@ public class Timer: NSObject {
         self.init(.basic(nil))
     }
 
+    /// Creates a `basic` timer from a set of arguments.
+    /// - parameter args: The arguments of the `basic` timer.
+    public convenience init(_ args: TimerType.Basic) {
+        self.init(.basic(args))
+    }
+
+    /// Creates a `stopwatch` timer from a set of arguments.
+    /// - parameter args: The arguments of the `stopwatch` timer.
+    public convenience init(_ args: TimerType.Stopwatch) {
+        self.init(.stopwatch(args))
+    }
+
+    /// Creates a `countdown` timer from a set of arguments.
+    /// - parameter args: The arguments of the `countdown` timer.
+    public convenience init(_ args: TimerType.Countdown) {
+        self.init(.countdown(args))
+    }
+
+    /// Creates a `countUp` timer from a set of arguments.
+    /// - parameter args: The arguments of the `countUp` timer.
+    public convenience init(_ args: TimerType.CountUp) {
+        self.init(.countUp(args))
+    }
+
+    /// Creates a `delay` timer from a set of arguments.
+    /// - parameter args: The arguments of the `delay` timer.
+    public convenience init(_ args: TimerType.Delay) {
+        self.init(.delay(args))
+    }
+
+    /// Creates a `schedule` timer from a set of arguments.
+    /// - parameter args: The arguments of the `schedule` timer.
+    public convenience init(_ args: TimerType.Schedule) {
+        self.init(.schedule(args))
+    }
+
     // MARK: Deinitialization
 
     deinit {
