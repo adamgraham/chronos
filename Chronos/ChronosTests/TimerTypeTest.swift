@@ -45,18 +45,8 @@ class TimerTypeTest: XCTestCase {
         XCTAssertNotNil(timer.onFinish)
     }
 
-    func testCountdown() {
-        let type = TimerType.countdown(count: 3.0, interval: 1.0, onCount: onCount, onFinish: onFinish)
-        let timer = Chronos.Timer(type)
-
-        XCTAssertEqual(timer.duration, 3.0)
-        XCTAssertEqual(timer.interval, 1.0)
-        XCTAssertNotNil(timer.onTick)
-        XCTAssertNotNil(timer.onFinish)
-    }
-
-    func testCountUp() {
-        let type = TimerType.countUp(count: 3.0, interval: 1.0, onCount: onCount, onFinish: onFinish)
+    func testCounter() {
+        let type = TimerType.counter(count: 3.0, interval: 1.0, onCount: onCount, onFinish: onFinish)
         let timer = Chronos.Timer(type)
 
         XCTAssertEqual(timer.duration, 3.0)

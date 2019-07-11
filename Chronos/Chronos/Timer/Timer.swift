@@ -131,17 +131,8 @@ public class Timer: NSObject {
     /// - parameter interval: The amount of seconds between each count interval.
     /// - parameter onCount: The callback closure invoked every count interval.
     /// - parameter onFinish: The callback closure invoked when the count is finished.
-    public static func Countdown(count: TimeInterval, interval: TimeInterval = 1.0, onCount: @escaping TimerEvent.Callback, onFinish: TimerEvent.Callback? = nil) -> Timer {
-        return Timer(.countdown(count: count, interval: interval, onCount: onCount, onFinish: onFinish))
-    }
-
-    /// Creates a `countUp` timer from a set of arguments.
-    /// - parameter count: The amount of seconds to which the timer counts up.
-    /// - parameter interval: The amount of seconds between each count interval.
-    /// - parameter onCount: The callback closure invoked every count interval.
-    /// - parameter onFinish: The callback closure invoked when the count is finished.
-    public static func CountUp(count: TimeInterval, interval: TimeInterval = 1.0, onCount: @escaping TimerEvent.Callback, onFinish: TimerEvent.Callback? = nil) -> Timer {
-        return Timer(.countUp(count: count, interval: interval, onCount: onCount, onFinish: onFinish))
+    public static func Counter(count: TimeInterval, interval: TimeInterval = 1.0, onCount: @escaping TimerEvent.Callback, onFinish: TimerEvent.Callback? = nil) -> Timer {
+        return Timer(.counter(count: count, interval: interval, onCount: onCount, onFinish: onFinish))
     }
 
     /// Creates a `schedule` timer from a set of arguments.

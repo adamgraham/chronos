@@ -114,36 +114,11 @@ class TimerTest: XCTestCase {
         XCTAssertNil(timer.customShouldFinish)
     }
 
-    func testCountdownInit() {
-        let timer = Chronos.Timer.Countdown(count: 3.0, onCount: { _ in })
+    func testCounterInit() {
+        let timer = Chronos.Timer.Counter(count: 3.0, onCount: { _ in })
 
         switch timer.type {
-        case .countdown:
-            break
-        default:
-            XCTFail("wrong type")
-        }
-
-        XCTAssertEqual(timer.interval, 1.0)
-        XCTAssertEqual(timer.duration, 3.0)
-        XCTAssertEqual(timer.elapsedTime, 0.0)
-        XCTAssertEqual(timer.elapsedTimeSinceLastTick, 0.0)
-        XCTAssertEqual(timer.elapsedTimeSinceLastFinish, 0.0)
-        XCTAssertNil(timer.timestampOfLastTick)
-        XCTAssertNil(timer.timestampOfLastFinish)
-        XCTAssertEqual(timer.timesTicked, 0)
-        XCTAssertEqual(timer.timesFinished, 0)
-        XCTAssertNotNil(timer.onTick)
-        XCTAssertNil(timer.onFinish)
-        XCTAssertNil(timer.customShouldTick)
-        XCTAssertNil(timer.customShouldFinish)
-    }
-
-    func testCountUpInit() {
-        let timer = Chronos.Timer.CountUp(count: 3.0, onCount: { _ in })
-
-        switch timer.type {
-        case .countUp:
+        case .counter:
             break
         default:
             XCTFail("wrong type")

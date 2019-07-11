@@ -27,21 +27,13 @@ public enum TimerType {
     /// - `onTimeout`: The callback closure invoked after the stopwatch times out.
     case stopwatch(timeout: TimeInterval?, onTimeout: TimerEvent.Callback?)
 
-    /// A timer that counts down from a set amount of time at a specific interval
+    /// A timer that counts to/from a set amount of time at a specific interval
     /// (often a one second interval, e.g., "3, 2, 1, Go!").
-    /// - `count`: The amount of seconds from which the timer counts down.
+    /// - `count`: The amount of seconds to/from which the timer counts.
     /// - `interval`: The amount of seconds between each count interval.
     /// - `onCount`: The callback closure invoked every count interval.
     /// - `onFinish`: The callback closure invoked when the count is finished.
-    case countdown(count: TimeInterval, interval: TimeInterval, onCount: TimerEvent.Callback, onFinish: TimerEvent.Callback?)
-
-    /// A timer that counts up to a set amount of time at a specific interval
-    /// (often a one second interval, e.g., "1, 2, 3, Go!").
-    /// - `count`: The amount of seconds to which the timer counts up.
-    /// - `interval`: The amount of seconds between each count interval.
-    /// - `onCount`: The callback closure invoked every count interval.
-    /// - `onFinish`: The callback closure invoked when the count is finished.
-    case countUp(count: TimeInterval, interval: TimeInterval, onCount: TimerEvent.Callback, onFinish: TimerEvent.Callback?)
+    case counter(count: TimeInterval, interval: TimeInterval, onCount: TimerEvent.Callback, onFinish: TimerEvent.Callback?)
 
     /// A timer that invokes scheduled events with a given frequency pattern between a start
     /// and end timestamp.
@@ -71,12 +63,7 @@ internal extension TimerType {
         case let .stopwatch(timeout, onTimeout):
             timer.duration = timeout
             timer.onFinish = onTimeout
-        case let .countdown(count, interval, onCount, onFinish):
-            timer.duration = count
-            timer.interval = interval
-            timer.onTick = onCount
-            timer.onFinish = onFinish
-        case let .countUp(count, interval, onCount, onFinish):
+        case let .counter(count, interval, onCount, onFinish):
             timer.duration = count
             timer.interval = interval
             timer.onTick = onCount
