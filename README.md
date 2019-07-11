@@ -1,6 +1,8 @@
 # Chronos
 > An iOS utility framework to create different types of timers.
 
+For detailed usage and documentation, please visit the [Chronos Reference](https://adamgraham.github.io/Chronos/).
+
 ## Requirements
 
 - iOS 10.0+
@@ -9,14 +11,36 @@
 
 ## Usage
 
-Chronos provides a simple but powerful `Chronos.Timer` class that provides more control and flexibility than the native iOS `Foundation.Timer`. The timer object can be created from the following supported types:
+Chronos provides a simple but powerful `Chronos.Timer` class that provides more control and flexibility than the native `Foundation.Timer`. The timer object can be created from the following types:
 
-- `.basic` - a generic timer that is controlled manually
-- `.stopwatch` - a timer that runs indefinitely, keeping track of the elapsed time
-- `.countdown` - a timer that counts down from a set amount of time at a specific interval
-- `.countUp` - a timer that counts up to a set amount of time at a specific interval
-- `.delay` - a timer that invokes a single completion event after a set amount of time
-- `.schedule` - a timer that invokes scheduled events with a frequency pattern between a start and end period
+- `basic` - a generic timer that is controlled manually
+- `counter` - a timer that counts to/from a set amount of time at a specific interval
+- `delay` - a timer that invokes a single completion event after a set amount of time
+- `schedule` - a timer that invokes scheduled events between a start and end period using a frequency pattern 
+- `stopwatch` - a timer that runs indefinitely, keeping track of the elapsed time
+
+### Examples
+
+``` swift
+Timer()
+Timer.Basic()
+Timer.Basic(interval: 1.0)
+Timer.Basic(interval: 1.0, onTick: { ... })
+Timer.Basic(interval: 1.0, onTick: { ... }, onFinish: { ... })
+
+Timer.Counter(count: 3.0, onCount: { ... })
+Timer.Counter(count: 3.0, interval: 1.0, onCount: { ... })
+Timer.Counter(count: 3.0, interval: 1.0, onCount: { ... }, onFinish: { ... })
+
+Timer.Delay(duration: 10.0, onFinish: { ... })
+
+Timer.Schedule(start: .distantPast, end: .distantFuture, frequency: { ... return true }, onSchedule: { ... })
+Timer.Schedule(start: .distantPast, end: .distantFuture, frequency: { ... return true }, onSchedule: { ... }, onFinish: { ... })
+
+Timer.Stopwatch()
+Timer.Stopwatch(timeout: 60.0)
+Timer.Stopwatch(timeout: 60.0, onTimeout: { ... })
+```
 
 ## License
 ```

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+    <script src="js/lunr.min.js" defer></script>
+    <script src="js/typeahead.jquery.js" defer></script>
+    <script src="js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+
+
+    <a title="  Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="index.html">
+          Chronos
+        </a>
+         (100% documented)
+      </p>
+    
+      <p class="header-col--secondary">
+        <form role="search" action="search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </p>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/adamgraham/Chronos">
+            <img class="header-icon" src="img/gh.png"/>
+            View on GitHub
+          </a>
+        </p>
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="index.html"> Reference</a>
+      <img class="carat" src="img/carat.png" />
+        Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Chronos.html">Chronos</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/Timer.html">Timer</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/TimerDelegate.html">TimerDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/TimerEvent.html">TimerEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/TimerEvent/EventType.html">– EventType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/TimerState.html">TimerState</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/TimerType.html">TimerType</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content">
+            
+            <h1 id='chronos' class='heading'>Chronos</h1>
+
+<blockquote>
+<p>An iOS utility framework to create different types of timers.</p>
+</blockquote>
+
+<p>For detailed usage and documentation, please visit the <a href="https://adamgraham.github.io/Chronos/">Chronos Reference</a>.</p>
+<h2 id='requirements' class='heading'>Requirements</h2>
+
+<ul>
+<li>iOS 10.0+</li>
+<li>Swift 5.0+</li>
+<li>Xcode 10.2+</li>
+</ul>
+<h2 id='usage' class='heading'>Usage</h2>
+
+<p>Chronos provides a simple but powerful <code>Chronos.Timer</code> class that provides more control and flexibility than the native <code>Foundation.Timer</code>. The timer object can be created from the following types:</p>
+
+<ul>
+<li><code>basic</code> - a generic timer that is controlled manually</li>
+<li><code>counter</code> - a timer that counts to/from a set amount of time at a specific interval</li>
+<li><code>delay</code> - a timer that invokes a single completion event after a set amount of time</li>
+<li><code>schedule</code> - a timer that invokes scheduled events between a start and end period using a frequency pattern</li>
+<li><code>stopwatch</code> - a timer that runs indefinitely, keeping track of the elapsed time</li>
+</ul>
+<h3 id='examples' class='heading'>Examples</h3>
+<pre class="highlight swift"><code><span class="kt">Timer</span><span class="p">()</span>
+<span class="kt">Timer</span><span class="o">.</span><span class="kt">Basic</span><span class="p">()</span>
+<span class="kt">Timer</span><span class="o">.</span><span class="kt">Basic</span><span class="p">(</span><span class="nv">interval</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="kt">Timer</span><span class="o">.</span><span class="kt">Basic</span><span class="p">(</span><span class="nv">interval</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="nv">onTick</span><span class="p">:</span> <span class="p">{</span> <span class="o">...</span> <span class="p">})</span>
+<span class="kt">Timer</span><span class="o">.</span><span class="kt">Basic</span><span class="p">(</span><span class="nv">interval</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="nv">onTick</span><span class="p">:</span> <span class="p">{</span> <span class="o">...</span> <span class="p">},</span> <span class="nv">onFinish</span><span class="p">:</span> <span class="p">{</span> <span class="o">...</span> <span class="p">})</span>
+
+<span class="kt">Timer</span><span class="o">.</span><span class="kt">Counter</span><span class="p">(</span><span class="nv">count</span><span class="p">:</span> <span class="mf">3.0</span><span class="p">,</span> <span class="nv">onCount</span><span class="p">:</span> <span class="p">{</span> <span class="o">...</span> <span class="p">})</span>
+<span class="kt">Timer</span><span class="o">.</span><span class="kt">Counter</span><span class="p">(</span><span class="nv">count</span><span class="p">:</span> <span class="mf">3.0</span><span class="p">,</span> <span class="nv">interval</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="nv">onCount</span><span class="p">:</span> <span class="p">{</span> <span class="o">...</span> <span class="p">})</span>
+<span class="kt">Timer</span><span class="o">.</span><span class="kt">Counter</span><span class="p">(</span><span class="nv">count</span><span class="p">:</span> <span class="mf">3.0</span><span class="p">,</span> <span class="nv">interval</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="nv">onCount</span><span class="p">:</span> <span class="p">{</span> <span class="o">...</span> <span class="p">},</span> <span class="nv">onFinish</span><span class="p">:</span> <span class="p">{</span> <span class="o">...</span> <span class="p">})</span>
+
+<span class="kt">Timer</span><span class="o">.</span><span class="kt">Delay</span><span class="p">(</span><span class="nv">duration</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">,</span> <span class="nv">onFinish</span><span class="p">:</span> <span class="p">{</span> <span class="o">...</span> <span class="p">})</span>
+
+<span class="kt">Timer</span><span class="o">.</span><span class="kt">Schedule</span><span class="p">(</span><span class="nv">start</span><span class="p">:</span> <span class="o">.</span><span class="n">distantPast</span><span class="p">,</span> <span class="nv">end</span><span class="p">:</span> <span class="o">.</span><span class="n">distantFuture</span><span class="p">,</span> <span class="nv">frequency</span><span class="p">:</span> <span class="p">{</span> <span class="o">...</span> <span class="k">return</span> <span class="kc">true</span> <span class="p">},</span> <span class="nv">onSchedule</span><span class="p">:</span> <span class="p">{</span> <span class="o">...</span> <span class="p">})</span>
+<span class="kt">Timer</span><span class="o">.</span><span class="kt">Schedule</span><span class="p">(</span><span class="nv">start</span><span class="p">:</span> <span class="o">.</span><span class="n">distantPast</span><span class="p">,</span> <span class="nv">end</span><span class="p">:</span> <span class="o">.</span><span class="n">distantFuture</span><span class="p">,</span> <span class="nv">frequency</span><span class="p">:</span> <span class="p">{</span> <span class="o">...</span> <span class="k">return</span> <span class="kc">true</span> <span class="p">},</span> <span class="nv">onSchedule</span><span class="p">:</span> <span class="p">{</span> <span class="o">...</span> <span class="p">},</span> <span class="nv">onFinish</span><span class="p">:</span> <span class="p">{</span> <span class="o">...</span> <span class="p">})</span>
+
+<span class="kt">Timer</span><span class="o">.</span><span class="kt">Stopwatch</span><span class="p">()</span>
+<span class="kt">Timer</span><span class="o">.</span><span class="kt">Stopwatch</span><span class="p">(</span><span class="nv">timeout</span><span class="p">:</span> <span class="mf">60.0</span><span class="p">)</span>
+<span class="kt">Timer</span><span class="o">.</span><span class="kt">Stopwatch</span><span class="p">(</span><span class="nv">timeout</span><span class="p">:</span> <span class="mf">60.0</span><span class="p">,</span> <span class="nv">onTimeout</span><span class="p">:</span> <span class="p">{</span> <span class="o">...</span> <span class="p">})</span>
+</code></pre>
+<h2 id='license' class='heading'>License</h2>
+<pre class="highlight plaintext"><code>MIT License
+
+Copyright (c) 2016 Adam Graham
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+</code></pre>
+
+          </div>
+        </section>
+
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>Copyright (c) 2016 Adam Graham</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.10.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>

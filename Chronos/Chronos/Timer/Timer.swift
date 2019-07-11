@@ -99,7 +99,7 @@ public class Timer: NSObject {
         type.apply(to: self)
     }
 
-    /// Creates a `basic` timer.
+    /// Creates a `basic` timer with default values.
     public convenience override init() {
         self.init(.basic(interval: 1.0, onTick: nil, onFinish: nil))
     }

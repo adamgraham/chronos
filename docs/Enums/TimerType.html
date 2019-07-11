@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>TimerType Enumeration Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+
+    <a name="//apple_ref/swift/Enum/TimerType" class="dashAnchor"></a>
+
+    <a title="TimerType Enumeration Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="../index.html">
+          Chronos
+        </a>
+         (100% documented)
+      </p>
+    
+      <p class="header-col--secondary">
+        <form role="search" action="../search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </p>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/adamgraham/Chronos">
+            <img class="header-icon" src="../img/gh.png"/>
+            View on GitHub
+          </a>
+        </p>
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="../index.html"> Reference</a>
+      <img class="carat" src="../img/carat.png" />
+      TimerType Enumeration Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Chronos.html">Chronos</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Timer.html">Timer</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/TimerDelegate.html">TimerDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/TimerEvent.html">TimerEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/TimerEvent/EventType.html">– EventType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/TimerState.html">TimerState</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/TimerType.html">TimerType</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content">
+            <h1>TimerType</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">TimerType</span></code></pre>
+
+                </div>
+              </div>
+            <p>A type of timer.</p>
+
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7Chronos9TimerTypeO5basicyACSdSg_yAA0B5EventVcSgAHtcACmF"></a>
+                    <a name="//apple_ref/swift/Element/basic(interval:onTick:onFinish:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Chronos9TimerTypeO5basicyACSdSg_yAA0B5EventVcSgAHtcACmF">basic(interval:onTick:onFinish:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A generic timer that is controlled manually.</p>
+
+<ul>
+<li><code>interval</code>: The amount of seconds between each <code>tick</code> event.</li>
+<li><code>onTick</code>: The callback closure invoked each time the timer fires a <code>tick</code> event.</li>
+<li><code>onFinish</code>: The callback closure invoked each time the timer fires a <code>finish</code> event.</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">basic</span><span class="p">(</span><span class="nv">interval</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">?,</span> <span class="nv">onTick</span><span class="p">:</span> <span class="kt"><a href="../Structs/TimerEvent.html">TimerEvent</a></span><span class="o">.</span><span class="kt">Callback</span><span class="p">?,</span> <span class="nv">onFinish</span><span class="p">:</span> <span class="kt"><a href="../Structs/TimerEvent.html">TimerEvent</a></span><span class="o">.</span><span class="kt">Callback</span><span class="p">?)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7Chronos9TimerTypeO7counteryACSd_SdyAA0B5EventVcyAFcSgtcACmF"></a>
+                    <a name="//apple_ref/swift/Element/counter(count:interval:onCount:onFinish:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Chronos9TimerTypeO7counteryACSd_SdyAA0B5EventVcyAFcSgtcACmF">counter(count:interval:onCount:onFinish:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A timer that counts to/from a set amount of time at a specific interval
+(often a one second interval, e.g., <q>3, 2, 1, Go!</q>).</p>
+
+<ul>
+<li><code>count</code>: The amount of seconds to/from which the timer counts.</li>
+<li><code>interval</code>: The amount of seconds between each count interval.</li>
+<li><code>onCount</code>: The callback closure invoked every count interval.</li>
+<li><code>onFinish</code>: The callback closure invoked when the count is finished.</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">counter</span><span class="p">(</span><span class="nv">count</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">,</span> <span class="nv">interval</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">,</span> <span class="nv">onCount</span><span class="p">:</span> <span class="kt"><a href="../Structs/TimerEvent.html">TimerEvent</a></span><span class="o">.</span><span class="kt">Callback</span><span class="p">,</span> <span class="nv">onFinish</span><span class="p">:</span> <span class="kt"><a href="../Structs/TimerEvent.html">TimerEvent</a></span><span class="o">.</span><span class="kt">Callback</span><span class="p">?)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7Chronos9TimerTypeO5delayyACSd_yAA0B5EventVctcACmF"></a>
+                    <a name="//apple_ref/swift/Element/delay(duration:onFinish:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Chronos9TimerTypeO5delayyACSd_yAA0B5EventVctcACmF">delay(duration:onFinish:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A timer that invokes a single <code>finish</code> event after a set amount of time.</p>
+
+<ul>
+<li><code>delay</code>: The amount of seconds the timer waits before finishing.</li>
+<li><code>onFinish</code>: The callback closure invoked after the delay is finished.</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">delay</span><span class="p">(</span><span class="nv">duration</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">,</span> <span class="nv">onFinish</span><span class="p">:</span> <span class="kt"><a href="../Structs/TimerEvent.html">TimerEvent</a></span><span class="o">.</span><span class="kt">Callback</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7Chronos9TimerTypeO8scheduleyAC10Foundation4DateV_AGSbAG_A2GtcyAA0B5EventVcyAIcSgtcACmF"></a>
+                    <a name="//apple_ref/swift/Element/schedule(start:end:frequency:onSchedule:onFinish:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Chronos9TimerTypeO8scheduleyAC10Foundation4DateV_AGSbAG_A2GtcyAA0B5EventVcyAIcSgtcACmF">schedule(start:end:frequency:onSchedule:onFinish:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A timer that invokes scheduled events between a start and end period using a frequency pattern.</p>
+
+<ul>
+<li><code>start</code>: The timestamp after which the timer starts firing events.</li>
+<li><code>end</code>: The timestamp after which the timer stops firing events.</li>
+<li><code>frequency</code>: The frequency pattern in which timer events are fired.</li>
+<li><code>onSchedule</code>: The callback closure invoked along the frequency pattern.</li>
+<li><code>onFinish</code>: The callback closure invoked after all scheduled events are finished.</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">schedule</span><span class="p">(</span><span class="nv">start</span><span class="p">:</span> <span class="kt">Date</span><span class="p">,</span> <span class="nv">end</span><span class="p">:</span> <span class="kt">Date</span><span class="p">,</span> <span class="nv">frequency</span><span class="p">:</span> <span class="kt"><a href="../Classes/Timer.html">Timer</a></span><span class="o">.</span><span class="kt">Frequency</span><span class="p">,</span> <span class="nv">onSchedule</span><span class="p">:</span> <span class="kt"><a href="../Structs/TimerEvent.html">TimerEvent</a></span><span class="o">.</span><span class="kt">Callback</span><span class="p">,</span> <span class="nv">onFinish</span><span class="p">:</span> <span class="kt"><a href="../Structs/TimerEvent.html">TimerEvent</a></span><span class="o">.</span><span class="kt">Callback</span><span class="p">?)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7Chronos9TimerTypeO9stopwatchyACSdSg_yAA0B5EventVcSgtcACmF"></a>
+                    <a name="//apple_ref/swift/Element/stopwatch(timeout:onTimeout:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7Chronos9TimerTypeO9stopwatchyACSdSg_yAA0B5EventVcSgtcACmF">stopwatch(timeout:onTimeout:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A timer that runs indefinitely, keeping track of the elapsed time.</p>
+
+<ul>
+<li><code>timeout</code>: The maximum time the stopwatch is allowed to run.</li>
+<li><code>onTimeout</code>: The callback closure invoked after the stopwatch times out.</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">stopwatch</span><span class="p">(</span><span class="nv">timeout</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">?,</span> <span class="nv">onTimeout</span><span class="p">:</span> <span class="kt"><a href="../Structs/TimerEvent.html">TimerEvent</a></span><span class="o">.</span><span class="kt">Callback</span><span class="p">?)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>Copyright (c) 2016 Adam Graham</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.10.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>

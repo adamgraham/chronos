@@ -30,8 +30,7 @@ public enum TimerType {
     /// - `onFinish`: The callback closure invoked after the delay is finished.
     case delay(duration: TimeInterval, onFinish: TimerEvent.Callback)
 
-    /// A timer that invokes scheduled events with a frequency pattern between a start and
-    /// end period.
+    /// A timer that invokes scheduled events between a start and end period using a frequency pattern.
     /// - `start`: The timestamp after which the timer starts firing events.
     /// - `end`: The timestamp after which the timer stops firing events.
     /// - `frequency`: The frequency pattern in which timer events are fired.
