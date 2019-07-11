@@ -11,6 +11,10 @@ import Foundation
 /// A timer that schedules and fires intervaled events.
 public class Timer: NSObject {
 
+    /// The method definition of a frequency pattern - a method that returns `true` if a given
+    /// timestamp between a start and end period contains a scheduled event.
+    public typealias Frequency = (_ current: Date, _ start: Date, _ end: Date) -> Bool
+
     // MARK: References
 
     /// A reference to the object listening to the timer events.
@@ -92,48 +96,62 @@ public class Timer: NSObject {
     public required init(_ type: TimerType) {
         self.type = type
         super.init()
-        type.args.apply(to: self)
+        type.apply(to: self)
     }
 
     /// Creates a `basic` timer.
     public convenience override init() {
-        self.init(.basic(nil))
+        self.init(.basic(interval: 1.0, onTick: nil, onFinish: nil))
     }
 
     /// Creates a `basic` timer from a set of arguments.
-    /// - parameter args: The arguments of the `basic` timer.
-    public convenience init(_ args: TimerType.Basic) {
-        self.init(.basic(args))
-    }
-
-    /// Creates a `stopwatch` timer from a set of arguments.
-    /// - parameter args: The arguments of the `stopwatch` timer.
-    public convenience init(_ args: TimerType.Stopwatch) {
-        self.init(.stopwatch(args))
-    }
-
-    /// Creates a `countdown` timer from a set of arguments.
-    /// - parameter args: The arguments of the `countdown` timer.
-    public convenience init(_ args: TimerType.Countdown) {
-        self.init(.countdown(args))
-    }
-
-    /// Creates a `countUp` timer from a set of arguments.
-    /// - parameter args: The arguments of the `countUp` timer.
-    public convenience init(_ args: TimerType.CountUp) {
-        self.init(.countUp(args))
+    /// - parameter interval: The amount of seconds between each `tick` event.
+    /// - parameter onTick: The callback closure invoked each time the timer fires a `tick` event.
+    /// - parameter onFinish: The callback closure invoked each time the timer fires a `finish` event.
+    public static func Basic(interval: TimeInterval = 1.0, onTick: TimerEvent.Callback? = nil, onFinish: TimerEvent.Callback? = nil) -> Timer {
+        return Timer(.basic(interval: interval, onTick: onTick, onFinish: onFinish))
     }
 
     /// Creates a `delay` timer from a set of arguments.
-    /// - parameter args: The arguments of the `delay` timer.
-    public convenience init(_ args: TimerType.Delay) {
-        self.init(.delay(args))
+    /// - parameter duration: The amount of seconds the timer waits before finishing.
+    /// - parameter onFinish: The callback closure invoked after the delay is finished.
+    public static func Delay(duration: TimeInterval, onFinish: @escaping TimerEvent.Callback) -> Timer {
+        return Timer(.delay(duration: duration, onFinish: onFinish))
+    }
+
+    /// Creates a `stopwatch` timer from a set of arguments.
+    /// - parameter timeout: The maximum time the stopwatch is allowed to run.
+    /// - parameter onTimeout: The callback closure invoked after the stopwatch times out.
+    public static func Stopwatch(timeout: TimeInterval? = nil, onTimeout: TimerEvent.Callback? = nil) -> Timer {
+        return Timer(.stopwatch(timeout: timeout, onTimeout: onTimeout))
+    }
+
+    /// Creates a `countdown` timer from a set of arguments.
+    /// - parameter count: The amount of seconds to which the timer counts up.
+    /// - parameter interval: The amount of seconds between each count interval.
+    /// - parameter onCount: The callback closure invoked every count interval.
+    /// - parameter onFinish: The callback closure invoked when the count is finished.
+    public static func Countdown(count: TimeInterval, interval: TimeInterval = 1.0, onCount: @escaping TimerEvent.Callback, onFinish: TimerEvent.Callback? = nil) -> Timer {
+        return Timer(.countdown(count: count, interval: interval, onCount: onCount, onFinish: onFinish))
+    }
+
+    /// Creates a `countUp` timer from a set of arguments.
+    /// - parameter count: The amount of seconds to which the timer counts up.
+    /// - parameter interval: The amount of seconds between each count interval.
+    /// - parameter onCount: The callback closure invoked every count interval.
+    /// - parameter onFinish: The callback closure invoked when the count is finished.
+    public static func CountUp(count: TimeInterval, interval: TimeInterval = 1.0, onCount: @escaping TimerEvent.Callback, onFinish: TimerEvent.Callback? = nil) -> Timer {
+        return Timer(.countUp(count: count, interval: interval, onCount: onCount, onFinish: onFinish))
     }
 
     /// Creates a `schedule` timer from a set of arguments.
-    /// - parameter args: The arguments of the `schedule` timer.
-    public convenience init(_ args: TimerType.Schedule) {
-        self.init(.schedule(args))
+    /// - parameter start: The timestamp after which the timer starts firing events.
+    /// - parameter end: The timestamp after which the timer stops firing events.
+    /// - parameter frequency: The frequency pattern in which timer events are fired.
+    /// - parameter onSchedule: The callback closure invoked along the frequency pattern.
+    /// - parameter onFinish: The callback closure invoked after all scheduled events are finished.
+    public static func Schedule(start: Date, end: Date, frequency: @escaping Frequency, onSchedule: @escaping TimerEvent.Callback, onFinish: TimerEvent.Callback? = nil) -> Timer {
+        return Timer(.schedule(start: start, end: end, frequency: frequency, onSchedule: onSchedule, onFinish: onFinish))
     }
 
     // MARK: Deinitialization

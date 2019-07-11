@@ -40,8 +40,7 @@ class TimerTest: XCTestCase {
     }
 
     func testBasicInit() {
-        let args = TimerType.Basic()
-        let timer = Chronos.Timer(args)
+        let timer = Chronos.Timer.Basic()
 
         switch timer.type {
         case .basic:
@@ -65,9 +64,33 @@ class TimerTest: XCTestCase {
         XCTAssertNil(timer.customShouldFinish)
     }
 
+    func testDelayInit() {
+        let timer = Chronos.Timer.Delay(duration: 10.0, onFinish: { _ in })
+
+        switch timer.type {
+        case .delay:
+            break
+        default:
+            XCTFail("wrong type")
+        }
+
+        XCTAssertEqual(timer.interval, 10.0)
+        XCTAssertEqual(timer.duration, 10.0)
+        XCTAssertEqual(timer.elapsedTime, 0.0)
+        XCTAssertEqual(timer.elapsedTimeSinceLastTick, 0.0)
+        XCTAssertEqual(timer.elapsedTimeSinceLastFinish, 0.0)
+        XCTAssertNil(timer.timestampOfLastTick)
+        XCTAssertNil(timer.timestampOfLastFinish)
+        XCTAssertEqual(timer.timesTicked, 0)
+        XCTAssertEqual(timer.timesFinished, 0)
+        XCTAssertNil(timer.onTick)
+        XCTAssertNotNil(timer.onFinish)
+        XCTAssertNil(timer.customShouldTick)
+        XCTAssertNil(timer.customShouldFinish)
+    }
+
     func testStopwatchInit() {
-        let args = TimerType.Stopwatch()
-        let timer = Chronos.Timer(args)
+        let timer = Chronos.Timer.Stopwatch()
 
         switch timer.type {
         case .stopwatch:
@@ -92,8 +115,7 @@ class TimerTest: XCTestCase {
     }
 
     func testCountdownInit() {
-        let args = TimerType.Countdown(count: 3.0, onCount: { _ in })
-        let timer = Chronos.Timer(args)
+        let timer = Chronos.Timer.Countdown(count: 3.0, onCount: { _ in })
 
         switch timer.type {
         case .countdown:
@@ -118,8 +140,7 @@ class TimerTest: XCTestCase {
     }
 
     func testCountUpInit() {
-        let args = TimerType.CountUp(count: 3.0, onCount: { _ in })
-        let timer = Chronos.Timer(args)
+        let timer = Chronos.Timer.CountUp(count: 3.0, onCount: { _ in })
 
         switch timer.type {
         case .countUp:
@@ -143,35 +164,8 @@ class TimerTest: XCTestCase {
         XCTAssertNil(timer.customShouldFinish)
     }
 
-    func testDelayInit() {
-        let args = TimerType.Delay(delay: 10.0, onFinish: { _ in })
-        let timer = Chronos.Timer(args)
-
-        switch timer.type {
-        case .delay:
-            break
-        default:
-            XCTFail("wrong type")
-        }
-
-        XCTAssertEqual(timer.interval, 10.0)
-        XCTAssertEqual(timer.duration, 10.0)
-        XCTAssertEqual(timer.elapsedTime, 0.0)
-        XCTAssertEqual(timer.elapsedTimeSinceLastTick, 0.0)
-        XCTAssertEqual(timer.elapsedTimeSinceLastFinish, 0.0)
-        XCTAssertNil(timer.timestampOfLastTick)
-        XCTAssertNil(timer.timestampOfLastFinish)
-        XCTAssertEqual(timer.timesTicked, 0)
-        XCTAssertEqual(timer.timesFinished, 0)
-        XCTAssertNil(timer.onTick)
-        XCTAssertNotNil(timer.onFinish)
-        XCTAssertNil(timer.customShouldTick)
-        XCTAssertNil(timer.customShouldFinish)
-    }
-
     func testScheduleInit() {
-        let args = TimerType.Schedule(start: .distantPast, end: .distantFuture, frequency: { _,_,_ in return true }, onSchedule: { _ in })
-        let timer = Chronos.Timer(args)
+        let timer = Chronos.Timer.Schedule(start: .distantPast, end: .distantFuture, frequency: { _,_,_ in return true }, onSchedule: { _ in })
 
         switch timer.type {
         case .schedule:
