@@ -64,56 +64,6 @@ class TimerTest: XCTestCase {
         XCTAssertNil(timer.customShouldFinish)
     }
 
-    func testDelayInit() {
-        let timer = Chronos.Timer.Delay(duration: 10.0, onFinish: { _ in })
-
-        switch timer.type {
-        case .delay:
-            break
-        default:
-            XCTFail("wrong type")
-        }
-
-        XCTAssertEqual(timer.interval, 10.0)
-        XCTAssertEqual(timer.duration, 10.0)
-        XCTAssertEqual(timer.elapsedTime, 0.0)
-        XCTAssertEqual(timer.elapsedTimeSinceLastTick, 0.0)
-        XCTAssertEqual(timer.elapsedTimeSinceLastFinish, 0.0)
-        XCTAssertNil(timer.timestampOfLastTick)
-        XCTAssertNil(timer.timestampOfLastFinish)
-        XCTAssertEqual(timer.timesTicked, 0)
-        XCTAssertEqual(timer.timesFinished, 0)
-        XCTAssertNil(timer.onTick)
-        XCTAssertNotNil(timer.onFinish)
-        XCTAssertNil(timer.customShouldTick)
-        XCTAssertNil(timer.customShouldFinish)
-    }
-
-    func testStopwatchInit() {
-        let timer = Chronos.Timer.Stopwatch()
-
-        switch timer.type {
-        case .stopwatch:
-            break
-        default:
-            XCTFail("wrong type")
-        }
-
-        XCTAssertNil(timer.interval)
-        XCTAssertNil(timer.duration)
-        XCTAssertEqual(timer.elapsedTime, 0.0)
-        XCTAssertEqual(timer.elapsedTimeSinceLastTick, 0.0)
-        XCTAssertEqual(timer.elapsedTimeSinceLastFinish, 0.0)
-        XCTAssertNil(timer.timestampOfLastTick)
-        XCTAssertNil(timer.timestampOfLastFinish)
-        XCTAssertEqual(timer.timesTicked, 0)
-        XCTAssertEqual(timer.timesFinished, 0)
-        XCTAssertNil(timer.onTick)
-        XCTAssertNil(timer.onFinish)
-        XCTAssertNil(timer.customShouldTick)
-        XCTAssertNil(timer.customShouldFinish)
-    }
-
     func testCounterInit() {
         let timer = Chronos.Timer.Counter(count: 3.0, onCount: { _ in })
 
@@ -135,6 +85,31 @@ class TimerTest: XCTestCase {
         XCTAssertEqual(timer.timesFinished, 0)
         XCTAssertNotNil(timer.onTick)
         XCTAssertNil(timer.onFinish)
+        XCTAssertNil(timer.customShouldTick)
+        XCTAssertNil(timer.customShouldFinish)
+    }
+
+    func testDelayInit() {
+        let timer = Chronos.Timer.Delay(duration: 10.0, onFinish: { _ in })
+
+        switch timer.type {
+        case .delay:
+            break
+        default:
+            XCTFail("wrong type")
+        }
+
+        XCTAssertEqual(timer.interval, 10.0)
+        XCTAssertEqual(timer.duration, 10.0)
+        XCTAssertEqual(timer.elapsedTime, 0.0)
+        XCTAssertEqual(timer.elapsedTimeSinceLastTick, 0.0)
+        XCTAssertEqual(timer.elapsedTimeSinceLastFinish, 0.0)
+        XCTAssertNil(timer.timestampOfLastTick)
+        XCTAssertNil(timer.timestampOfLastFinish)
+        XCTAssertEqual(timer.timesTicked, 0)
+        XCTAssertEqual(timer.timesFinished, 0)
+        XCTAssertNil(timer.onTick)
+        XCTAssertNotNil(timer.onFinish)
         XCTAssertNil(timer.customShouldTick)
         XCTAssertNil(timer.customShouldFinish)
     }
@@ -162,6 +137,31 @@ class TimerTest: XCTestCase {
         XCTAssertNil(timer.onFinish)
         XCTAssertNotNil(timer.customShouldTick)
         XCTAssertNotNil(timer.customShouldFinish)
+    }
+
+    func testStopwatchInit() {
+        let timer = Chronos.Timer.Stopwatch()
+
+        switch timer.type {
+        case .stopwatch:
+            break
+        default:
+            XCTFail("wrong type")
+        }
+
+        XCTAssertNil(timer.interval)
+        XCTAssertNil(timer.duration)
+        XCTAssertEqual(timer.elapsedTime, 0.0)
+        XCTAssertEqual(timer.elapsedTimeSinceLastTick, 0.0)
+        XCTAssertEqual(timer.elapsedTimeSinceLastFinish, 0.0)
+        XCTAssertNil(timer.timestampOfLastTick)
+        XCTAssertNil(timer.timestampOfLastFinish)
+        XCTAssertEqual(timer.timesTicked, 0)
+        XCTAssertEqual(timer.timesFinished, 0)
+        XCTAssertNil(timer.onTick)
+        XCTAssertNil(timer.onFinish)
+        XCTAssertNil(timer.customShouldTick)
+        XCTAssertNil(timer.customShouldFinish)
     }
 
     // MARK: State Control Tests

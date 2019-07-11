@@ -17,16 +17,6 @@ public enum TimerType {
     /// - `onFinish`: The callback closure invoked each time the timer fires a `finish` event.
     case basic(interval: TimeInterval?, onTick: TimerEvent.Callback?, onFinish: TimerEvent.Callback?)
 
-    /// A timer that invokes a single `finish` event after a set amount of time.
-    /// - `delay`: The amount of seconds the timer waits before finishing.
-    /// - `onFinish`: The callback closure invoked after the delay is finished.
-    case delay(duration: TimeInterval, onFinish: TimerEvent.Callback)
-
-    /// A timer that runs indefinitely, keeping track of the elapsed time.
-    /// - `timeout`: The maximum time the stopwatch is allowed to run.
-    /// - `onTimeout`: The callback closure invoked after the stopwatch times out.
-    case stopwatch(timeout: TimeInterval?, onTimeout: TimerEvent.Callback?)
-
     /// A timer that counts to/from a set amount of time at a specific interval
     /// (often a one second interval, e.g., "3, 2, 1, Go!").
     /// - `count`: The amount of seconds to/from which the timer counts.
@@ -35,14 +25,24 @@ public enum TimerType {
     /// - `onFinish`: The callback closure invoked when the count is finished.
     case counter(count: TimeInterval, interval: TimeInterval, onCount: TimerEvent.Callback, onFinish: TimerEvent.Callback?)
 
-    /// A timer that invokes scheduled events with a given frequency pattern between a start
-    /// and end timestamp.
+    /// A timer that invokes a single `finish` event after a set amount of time.
+    /// - `delay`: The amount of seconds the timer waits before finishing.
+    /// - `onFinish`: The callback closure invoked after the delay is finished.
+    case delay(duration: TimeInterval, onFinish: TimerEvent.Callback)
+
+    /// A timer that invokes scheduled events with a frequency pattern between a start and
+    /// end period.
     /// - `start`: The timestamp after which the timer starts firing events.
     /// - `end`: The timestamp after which the timer stops firing events.
     /// - `frequency`: The frequency pattern in which timer events are fired.
     /// - `onSchedule`: The callback closure invoked along the frequency pattern.
     /// - `onFinish`: The callback closure invoked after all scheduled events are finished.
     case schedule(start: Date, end: Date, frequency: Timer.Frequency, onSchedule: TimerEvent.Callback, onFinish: TimerEvent.Callback?)
+
+    /// A timer that runs indefinitely, keeping track of the elapsed time.
+    /// - `timeout`: The maximum time the stopwatch is allowed to run.
+    /// - `onTimeout`: The callback closure invoked after the stopwatch times out.
+    case stopwatch(timeout: TimeInterval?, onTimeout: TimerEvent.Callback?)
 
 }
 
@@ -56,23 +56,23 @@ internal extension TimerType {
             timer.interval = interval
             timer.onTick = onTick
             timer.onFinish = onFinish
-        case let .delay(duration, onFinish):
-            timer.duration = duration
-            timer.interval = duration
-            timer.onFinish = onFinish
-        case let .stopwatch(timeout, onTimeout):
-            timer.duration = timeout
-            timer.onFinish = onTimeout
         case let .counter(count, interval, onCount, onFinish):
             timer.duration = count
             timer.interval = interval
             timer.onTick = onCount
+            timer.onFinish = onFinish
+        case let .delay(duration, onFinish):
+            timer.duration = duration
+            timer.interval = duration
             timer.onFinish = onFinish
         case let .schedule(start, end, frequency, onSchedule, onFinish):
             timer.customShouldTick = shouldTick(start, end, frequency)
             timer.customShouldFinish = shouldFinish(end)
             timer.onTick = onSchedule
             timer.onFinish = onFinish
+        case let .stopwatch(timeout, onTimeout):
+            timer.duration = timeout
+            timer.onFinish = onTimeout
         }
     }
 

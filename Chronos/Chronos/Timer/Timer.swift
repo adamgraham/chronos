@@ -112,20 +112,6 @@ public class Timer: NSObject {
         return Timer(.basic(interval: interval, onTick: onTick, onFinish: onFinish))
     }
 
-    /// Creates a `delay` timer from a set of arguments.
-    /// - parameter duration: The amount of seconds the timer waits before finishing.
-    /// - parameter onFinish: The callback closure invoked after the delay is finished.
-    public static func Delay(duration: TimeInterval, onFinish: @escaping TimerEvent.Callback) -> Timer {
-        return Timer(.delay(duration: duration, onFinish: onFinish))
-    }
-
-    /// Creates a `stopwatch` timer from a set of arguments.
-    /// - parameter timeout: The maximum time the stopwatch is allowed to run.
-    /// - parameter onTimeout: The callback closure invoked after the stopwatch times out.
-    public static func Stopwatch(timeout: TimeInterval? = nil, onTimeout: TimerEvent.Callback? = nil) -> Timer {
-        return Timer(.stopwatch(timeout: timeout, onTimeout: onTimeout))
-    }
-
     /// Creates a `countdown` timer from a set of arguments.
     /// - parameter count: The amount of seconds to which the timer counts up.
     /// - parameter interval: The amount of seconds between each count interval.
@@ -133,6 +119,13 @@ public class Timer: NSObject {
     /// - parameter onFinish: The callback closure invoked when the count is finished.
     public static func Counter(count: TimeInterval, interval: TimeInterval = 1.0, onCount: @escaping TimerEvent.Callback, onFinish: TimerEvent.Callback? = nil) -> Timer {
         return Timer(.counter(count: count, interval: interval, onCount: onCount, onFinish: onFinish))
+    }
+
+    /// Creates a `delay` timer from a set of arguments.
+    /// - parameter duration: The amount of seconds the timer waits before finishing.
+    /// - parameter onFinish: The callback closure invoked after the delay is finished.
+    public static func Delay(duration: TimeInterval, onFinish: @escaping TimerEvent.Callback) -> Timer {
+        return Timer(.delay(duration: duration, onFinish: onFinish))
     }
 
     /// Creates a `schedule` timer from a set of arguments.
@@ -143,6 +136,13 @@ public class Timer: NSObject {
     /// - parameter onFinish: The callback closure invoked after all scheduled events are finished.
     public static func Schedule(start: Date, end: Date, frequency: @escaping Frequency, onSchedule: @escaping TimerEvent.Callback, onFinish: TimerEvent.Callback? = nil) -> Timer {
         return Timer(.schedule(start: start, end: end, frequency: frequency, onSchedule: onSchedule, onFinish: onFinish))
+    }
+
+    /// Creates a `stopwatch` timer from a set of arguments.
+    /// - parameter timeout: The maximum time the stopwatch is allowed to run.
+    /// - parameter onTimeout: The callback closure invoked after the stopwatch times out.
+    public static func Stopwatch(timeout: TimeInterval? = nil, onTimeout: TimerEvent.Callback? = nil) -> Timer {
+        return Timer(.stopwatch(timeout: timeout, onTimeout: onTimeout))
     }
 
     // MARK: Deinitialization

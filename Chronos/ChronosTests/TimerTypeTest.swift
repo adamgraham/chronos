@@ -28,23 +28,6 @@ class TimerTypeTest: XCTestCase {
         XCTAssertNotNil(timer.onFinish)
     }
 
-    func testDelay() {
-        let type = TimerType.delay(duration: 10.0, onFinish: onFinish)
-        let timer = Chronos.Timer(type)
-
-        XCTAssertEqual(timer.duration, 10.0)
-        XCTAssertEqual(timer.interval, 10.0)
-        XCTAssertNotNil(timer.onFinish)
-    }
-
-    func testStopwatch() {
-        let type = TimerType.stopwatch(timeout: 60.0, onTimeout: onTimeout)
-        let timer = Chronos.Timer(type)
-
-        XCTAssertEqual(timer.duration, 60.0)
-        XCTAssertNotNil(timer.onFinish)
-    }
-
     func testCounter() {
         let type = TimerType.counter(count: 3.0, interval: 1.0, onCount: onCount, onFinish: onFinish)
         let timer = Chronos.Timer(type)
@@ -52,6 +35,15 @@ class TimerTypeTest: XCTestCase {
         XCTAssertEqual(timer.duration, 3.0)
         XCTAssertEqual(timer.interval, 1.0)
         XCTAssertNotNil(timer.onTick)
+        XCTAssertNotNil(timer.onFinish)
+    }
+
+    func testDelay() {
+        let type = TimerType.delay(duration: 10.0, onFinish: onFinish)
+        let timer = Chronos.Timer(type)
+
+        XCTAssertEqual(timer.duration, 10.0)
+        XCTAssertEqual(timer.interval, 10.0)
         XCTAssertNotNil(timer.onFinish)
     }
 
@@ -91,6 +83,14 @@ class TimerTypeTest: XCTestCase {
         type = TimerType.schedule(start: .distantPast, end: .distantPast, frequency: frequency, onSchedule: onSchedule, onFinish: onFinish)
         timer = Chronos.Timer(type)
         XCTAssertTrue(timer.customShouldFinish?(timer) ?? false)
+    }
+
+    func testStopwatch() {
+        let type = TimerType.stopwatch(timeout: 60.0, onTimeout: onTimeout)
+        let timer = Chronos.Timer(type)
+
+        XCTAssertEqual(timer.duration, 60.0)
+        XCTAssertNotNil(timer.onFinish)
     }
 
 }
