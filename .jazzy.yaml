@@ -2,7 +2,7 @@ theme: fullwidth
 title: Chronos
 author: Adam Graham
 author_url: https://github.com/adamgraham
-github_url: https://github.com/adamgraham/Chronos
+github_url: https://github.com/adamgraham/chronos
 copyright: Copyright (c) 2016 Adam Graham
 readme: README.md
 source_directory: ./Chronos

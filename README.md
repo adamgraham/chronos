@@ -1,7 +1,7 @@
 # Chronos
 > An iOS utility framework to create different types of timers.
 
-For detailed usage and documentation, please visit the [Chronos Reference](https://adamgraham.github.io/Chronos/).
+For detailed usage and documentation, please visit the [Chronos Reference](https://adamgraham.github.io/chronos/).
 
 ## Requirements
 
