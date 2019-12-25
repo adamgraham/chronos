@@ -7,7 +7,7 @@ For detailed usage and documentation, please visit the [Chronos Reference](https
 
 - iOS 10.0+
 - Swift 5.0+
-- Xcode 10.2+
+- Xcode 11.0+
 
 ## Usage
 
@@ -23,6 +23,7 @@ Chronos provides a simple but powerful `Chronos.Timer` class that provides more 
 
 ``` swift
 Timer()
+
 Timer.Basic()
 Timer.Basic(interval: 1.0)
 Timer.Basic(interval: 1.0, onTick: { ... })
